@@ -4,7 +4,8 @@ export default class Day extends Component {
   state = {
     popupToggle: false,
     eventArr: [],
-    currentDate: ''
+    currentDate: '',
+    day: this.props.id
   };
 
   newEventPopup = () => {
@@ -40,8 +41,9 @@ export default class Day extends Component {
     return (
       <div className="day">
         <div className="date-title">
-          <div>Day X</div>
-          <button onClick={this.handlePopupToggle}>+</button>
+            {/* {console.log(this.state.day)} */}
+                <div>{this.state.day}</div>
+          <button className='addEventBtn' onClick={this.handlePopupToggle}>+</button>
         </div>
         <div className="events">
           <div>

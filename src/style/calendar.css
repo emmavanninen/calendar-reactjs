@@ -1,0 +1,59 @@
+:root {
+  background-color: black;
+}
+#root {
+  height: 100vh;
+  background-color: rgb(71, 71, 71);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.page {
+  width: 80vw;
+  height: 90vh;
+  border: 1px solid brown;
+}
+
+.dates {
+  display: grid;
+  grid-template-columns: 7;
+  grid-template-rows: 5;
+}
+
+.date-title{
+    grid-column: 2 / span 1;
+    grid-row: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.day {
+  border: 1px solid rgb(0, 0, 0);
+  height: 150px;
+  width: 150px;
+  background-color: white;
+  display: grid;
+  grid-template-columns: 10% 80% 10%;
+  grid-template-rows: 10% 80% 10%;
+}
+
+.events {
+    grid-column: 2;
+    grid-row: 2;
+    height: 100%;
+  overflow: scroll;
+}
+
+.addEventPopup {
+  /* z-index: -10; */
+  grid-column: 3;
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 200px;
+  width: 300px;
+  background-color: rgb(199, 199, 199);
+}

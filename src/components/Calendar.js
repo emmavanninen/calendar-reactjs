@@ -8,8 +8,27 @@ class Calendar extends Component {
     super(props);
 
     this.state = {
-      dates: ""
+      currentMonth: []
     };
+  }
+
+  daysInCurrentMonth = (month, year) => {
+    month = new Date().getMonth() + 1;
+    year = new Date().getYear() + 1;
+    return new Date(year, month, 0).getDate();
+  };
+
+  createCurrentMonth = (month, item) =>{
+      
+      for(let i = 0; i < month; i++) {
+        item = this.state.currentMonth
+        item.push(<Day
+            key={i}
+            id={i+1}
+            />)        
+    }
+
+    return item
   }
 
   render() {
@@ -20,7 +39,7 @@ class Calendar extends Component {
         </a>
         <div className="page">
           <div className="dates">
-            <Day />
+          {this.createCurrentMonth(this.daysInCurrentMonth())}
           </div>
         </div>
       </>

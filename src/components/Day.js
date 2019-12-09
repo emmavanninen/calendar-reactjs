@@ -56,7 +56,7 @@ export default class Day extends Component {
         </div>
         {this.state.popupToggle ? (
           <form className="addEventPopup" onSubmit={this.createEvent}>
-
+                    <button id='close-popup' type='button' onClick={this.handlePopupToggle}>X</button>
                     <input type='date' name="eventDate"  />
             <input name="event" placeholder="New event" />
             <input name="eventDescripition" placeholder="Descripition" />

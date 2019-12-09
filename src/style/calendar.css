@@ -10,15 +10,15 @@
 }
 
 .page {
-  width: 80vw;
+  width: 900px;
   height: 90vh;
   border: 1px solid brown;
 }
 
 .dates {
-  display: grid;
-  grid-template-columns: 7;
-  grid-template-rows: 5;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .date-title{
@@ -31,8 +31,10 @@
 
 .day {
   border: 1px solid rgb(0, 0, 0);
-  height: 150px;
-  width: 150px;
+  height: 100px;
+  width: 123px;
+  margin-right: 5px;
+  margin-bottom: 5px;
   background-color: white;
   display: grid;
   grid-template-columns: 10% 80% 10%;
@@ -47,7 +49,7 @@
 }
 
 .addEventPopup {
-  /* z-index: -10; */
+  z-index: 10;
   grid-column: 3;
   grid-row: 2;
   display: flex;
@@ -56,4 +58,10 @@
   height: 200px;
   width: 300px;
   background-color: rgb(199, 199, 199);
+}
+
+
+#close-popup{
+    align-self: flex-end;
+    width: 40px;
 }

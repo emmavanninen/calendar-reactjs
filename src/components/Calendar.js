@@ -24,7 +24,7 @@ class Calendar extends Component {
   };
 
   createNewEvent = (title, desc, date) => {
-      apiCreateNewEvent(title, desc, date)
+    apiCreateNewEvent(title, desc, date)
       .then(result => console.log(`new event?`, result))
       .catch(error => console.log("error: ", error));
   };
@@ -36,22 +36,15 @@ class Calendar extends Component {
   };
 
   createCurrentMonth = (month, item) => {
-      console.log(`this.props`, this.props);
-      
+    console.log(`this.props`, this.props);
+
+    let items = [];
+
     for (let i = 0; i < month; i++) {
-    
-      item = this.state.currentMonth;
-      item.push(
-        <Day
-          key={i}
-          day={i + 1}
-          month={this.state.month}
-          year={this.state.year}
-          createNewEvent={this.createNewEvent}
-        />
-      );
+      items.push(item);
     }
-    return item;
+    console.log(items);
+    return items;
   };
 
   render() {
@@ -63,7 +56,7 @@ class Calendar extends Component {
         {this.getAllEvents()}
         <div className="page">
           <div className="dates">
-            {this.createCurrentMonth(this.daysInCurrentMonth())}
+            {this.createCurrentMonth(this.daysInCurrentMonth(), <Day />)}
           </div>
         </div>
       </>

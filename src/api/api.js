@@ -13,14 +13,18 @@ export const apiGetMonthEvents = month => {
   });
 };
 
-export const apiCreateNewEvent = newEvent => {
+export const apiCreateNewEvent = (title, desc, date) => {
+    console.log(`from api getting from browser`, title, desc, date);
+    
   return new Promise((resolve, reject) => {
 
     const newObj = {
-      event: newEvent,
+        title,
+        desc,
+        date
     };
 
-    Axios.post("/events/createevent", newObj, axiosConfig)
+    Axios.post("/events/createevent", newObj)
       .then(newTodo => resolve(newTodo.data))
       .catch(err => reject(err));
   });

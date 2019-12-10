@@ -5,9 +5,10 @@ export default class Day extends Component {
     popupToggle: false,
     eventToggle: false,
     eventArr: [],
-    currentDate: "",
     day: this.props.day,
-    newEvent: ""
+    date: Date,
+    newEvent: "",
+    newEventDesc: ""
   };
 
   newEventPopup = () => {
@@ -34,9 +35,12 @@ export default class Day extends Component {
   };
 
   createEvent = e => {
-    console.log(`state`, this.state.newEvent);
+      console.log(`state`, this.state.newEvent);
     e.preventDefault();
 
+      this.props.createNewEvent(this.state.newEvent, this.state.newEventDesc, this.state.date)
+
+      
     const event = this.state.eventArr;
     event.push(
       <div className="event" onClick={this.handleEventToggle}>
@@ -45,22 +49,41 @@ export default class Day extends Component {
     );
     this.setState({
       eventArr: event,
-      newEvent: e.target.value
+    //   newEvent: this.state.newEvent,
+    //   newEventDesc: this.state.eventDesc
     });
+
     this.handlePopupToggle();
   };
 
   handleChange = e => {
-    this.setState({
-      newEvent: e.target.value
-    });
+      if (e.target.name === 'newEvent'){
+          this.setState({
+              newEvent: e.target.value,
+              date: this.getDate()
+          });
+      } else if (e.target.name === 'newEventDesc'){
+          this.setState({
+              newEventDesc: e.target.value,
+              date: this.getDate()
+          });
+      }
+
+
+  };
+
+
+  getDate = () => {
+    const date = `${this.props.year}-${this.props.month}-${this.props.day}`;
+
+    return date;
   };
 
   //! name this.props under variables
   render() {
-   const {
-     //
-   } = this.props;
+    const {
+      //
+    } = this.props;
 
     return (
       <div className="day">
@@ -90,13 +113,21 @@ export default class Day extends Component {
             >
               X
             </button>
-            <input type="date" name="eventDate" />
+            <div name="eventDate" value={this.getDate()}>
+              {this.getDate()}
+            </div>
             <input
-              name="event"
-              placeholder="New event" value={this.state.newEvent}
+              name="newEvent"
+              placeholder="New event"
+              value={this.state.newEvent}
               onChange={this.handleChange}
             />
-            <input name="eventDescripition" placeholder="Descripition" />
+            <input
+              name="newEventDesc"
+              placeholder="Descripition"
+              value={this.state.newEventDesc}
+              onChange={this.handleChange}
+            />
 
             <button className="buttonClass">Add Event</button>
           </form>

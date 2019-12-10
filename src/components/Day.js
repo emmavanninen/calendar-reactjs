@@ -6,7 +6,8 @@ export default class Day extends Component {
     eventToggle: false,
     eventArr: [],
     currentDate: "",
-    day: this.props.id
+    day: this.props.day,
+    newEvent: ""
   };
 
   newEventPopup = () => {
@@ -33,22 +34,33 @@ export default class Day extends Component {
   };
 
   createEvent = e => {
+    console.log(`state`, this.state.newEvent);
     e.preventDefault();
+
     const event = this.state.eventArr;
     event.push(
       <div className="event" onClick={this.handleEventToggle}>
         Poop
       </div>
     );
-    this.setState({ eventArr: event });
+    this.setState({
+      eventArr: event,
+      newEvent: e.target.value
+    });
     this.handlePopupToggle();
+  };
+
+  handleChange = e => {
+    this.setState({
+      newEvent: e.target.value
+    });
   };
 
   //! name this.props under variables
   render() {
-    const {
-      //
-    } = this.props;
+   const {
+     //
+   } = this.props;
 
     return (
       <div className="day">
@@ -79,7 +91,11 @@ export default class Day extends Component {
               X
             </button>
             <input type="date" name="eventDate" />
-            <input name="event" placeholder="New event" />
+            <input
+              name="event"
+              placeholder="New event" value={this.state.newEvent}
+              onChange={this.handleChange}
+            />
             <input name="eventDescripition" placeholder="Descripition" />
 
             <button className="buttonClass">Add Event</button>
@@ -99,11 +115,12 @@ export default class Day extends Component {
             <div name="eventdate">1.2.1992</div>
             <div name="event">Event</div>
             <div name="eventdescription">Description:</div>
-            <div>Event made
-                <br/>
-                1.2.1992
-                <br/>
-                By Emma
+            <div>
+              Event made
+              <br />
+              1.2.1992
+              <br />
+              By Emma
             </div>
           </form>
         ) : (

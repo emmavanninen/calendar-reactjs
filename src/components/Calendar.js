@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import "../style/calendar.css";
 import Day from "./Day";
+import { apiGetMonthEvents, apiCreateNewEvent } from "../api/api";
+
 // import PropTypes from "prop-types";
 
 class Calendar extends Component {
@@ -8,9 +10,23 @@ class Calendar extends Component {
     super(props);
 
     this.state = {
+        //TODO: Update month
+        month: new Date().getMonth() + 1,
       currentMonth: []
     };
   }
+
+getAllEvents= () =>{
+    apiGetMonthEvents(this.state.month)
+        .then(result => console.log(`what did calendar get?`, result))
+        .catch(error => console.log("error: ", error));
+}
+
+createNewEvent = () => {
+    apiCreateNewEvent()
+      .then(result => console.log(`new event?`, result))
+      .catch(error => console.log("error: ", error));
+}
 
   daysInCurrentMonth = (month, year) => {
     month = new Date().getMonth() + 1;
@@ -24,7 +40,8 @@ class Calendar extends Component {
         item = this.state.currentMonth
         item.push(<Day
             key={i}
-            id={i+1}
+            day={i+1}
+            month={this.state.month}
             />)        
     }
 
@@ -37,9 +54,10 @@ class Calendar extends Component {
         <a href="/" className="navbar-brand">
           Calendar
         </a>
+        {this.getAllEvents()}
         <div className="page">
           <div className="dates">
-          {this.createCurrentMonth(this.daysInCurrentMonth())}
+            {this.createCurrentMonth(this.daysInCurrentMonth())}
           </div>
         </div>
       </>

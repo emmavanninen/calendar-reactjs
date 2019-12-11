@@ -1,21 +1,30 @@
 import { Axios } from "./Axios";
 
-export const apiGetMonthEvents = month => {
+export const apiGetMonthEvents = (month, year) => {
+    console.log(month);
+    console.log(year);
+    
   return new Promise((resolve, reject) => {
       
 
-    Axios.get(`/events?month=${month}`)
+      Axios.get(`/events?yearmonth=${year}${month}`)
       .then(events => {
-        console.log(`stuff from backend`, events);
-        // resolve(events)
+        console.log(`stuff from backend`, events.data);
+          events = events.data.map(event => {
+              
+              let day = event.event.date.slice(8, 10);
+              day = day.replace(/0/g, "");
+              return event={...event, dateID: day}
+          });
+        resolve(events)
       })
       .catch(err => reject(err));
   });
 };
 
 export const apiCreateNewEvent = (title, desc, date) => {
-    console.log(`from api getting from browser`, title, desc, date);
-    
+
+
   return new Promise((resolve, reject) => {
 
     const newObj = {
@@ -25,7 +34,7 @@ export const apiCreateNewEvent = (title, desc, date) => {
     };
 
     Axios.post("/events/createevent", newObj)
-      .then(newTodo => resolve(newTodo.data))
+      .then(event => resolve(event.data))
       .catch(err => reject(err));
   });
 };

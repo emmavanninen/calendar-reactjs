@@ -6,45 +6,74 @@ import { apiGetMonthEvents, apiCreateNewEvent } from "../api/api";
 // import PropTypes from "prop-types";
 
 class Calendar extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      //TODO: Update month
-      month: new Date().getMonth() + 1,
-      year: new Date().getYear() + 1900,
-      currentMonth: []
-    };
-  }
-
-  getAllEvents = () => {
-    apiGetMonthEvents(this.state.month)
-      .then(result => console.log(`what did calendar get?`, result))
-      .catch(error => console.log("error: ", error));
+  state = {
+    //TODO: Update month
+    month: new Date().getMonth() + 1,
+    year: new Date().getYear() + 1900,
+    currentMonth: []
   };
+
 
   createNewEvent = (title, desc, date) => {
     apiCreateNewEvent(title, desc, date)
-      .then(result => console.log(`new event?`, result))
+      .then(result => {
+        return result;
+      })
       .catch(error => console.log("error: ", error));
   };
 
-  daysInCurrentMonth = (month, year) => {
-    month = new Date().getMonth() + 1;
-    year = new Date().getYear() + 1900;
+  daysInCurrentMonth = () => {
+    let month = new Date().getMonth() + 1;
+    let year = new Date().getYear() + 1900;
     return new Date(year, month, 0).getDate();
   };
 
-  createCurrentMonth = (month, item) => {
-    console.log(`this.props`, this.props);
+  componentDidMount() {
+    this.createCurrentMonth(this.daysInCurrentMonth());
+  }
 
-    let items = [];
+  createCurrentMonth = month => {
+    apiGetMonthEvents(this.state.month, this.state.year)
+      .then(result => {
+        // console.log(`all`, result);
+        let items = [];
 
-    for (let i = 0; i < month; i++) {
-      items.push(item);
-    }
-    console.log(items);
-    return items;
+        for (let i = 0; i < month; i++) {
+          items.push(
+            <Day
+              key={i}
+              day={i + 1}
+              month={this.state.month}
+              year={this.state.year}
+              createNewEvent={this.createNewEvent}
+            />
+          );
+
+          result.filter(event => {
+            if (Number(event.dateID) === i) {
+              items.pop();
+              items.push(
+                <Day
+                  key={i}
+                  day={i + 1}
+                  month={this.state.month}
+                  year={this.state.year}
+                  createNewEvent={this.createNewEvent}
+                  event={event}
+                />
+              );
+            }
+          });
+        }
+
+           this.setState({
+               currentMonth: items
+           })
+        console.log(this.state.currentMonth);
+
+        // return items;
+      })
+      .catch(error => console.log("error: ", error));
   };
 
   render() {
@@ -53,10 +82,9 @@ class Calendar extends Component {
         <a href="/" className="navbar-brand">
           Calendar
         </a>
-        {this.getAllEvents()}
         <div className="page">
           <div className="dates">
-            {this.createCurrentMonth(this.daysInCurrentMonth(), <Day />)}
+              {this.state.currentMonth}
           </div>
         </div>
       </>

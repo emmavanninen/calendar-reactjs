@@ -9,7 +9,6 @@ export const apiGetMonthEvents = (month, year) => {
 
       Axios.get(`/events?yearmonth=${year}${month}`)
       .then(events => {
-        console.log(`stuff from backend`, events.data);
           events = events.data.map(event => {
               
               let day = event.event.date.slice(8, 10);

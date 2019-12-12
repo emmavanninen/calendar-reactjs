@@ -16,11 +16,10 @@ export default class Day extends Component {
   };
 
   getEvents = () => {
-
     if (this.props.event === undefined) {
       return;
     } else {
-      return this.props.event.event.title
+      return this.props.event.event.title;
     }
   };
 
@@ -44,7 +43,6 @@ export default class Day extends Component {
   };
 
   createEvent = e => {
-    console.log(`state`, this.state.newEvent);
     e.preventDefault();
 
     this.props.createNewEvent(
@@ -96,7 +94,7 @@ export default class Day extends Component {
 
     return (
       <div className="day">
-       <p> {this.getEvents()}</p>
+        <p onClick={this.handleEventToggle}> {this.getEvents()}</p>
         <div className="date-title">
           <div>{this.state.day}</div>
           <button className="addEventBtn" onClick={this.handlePopupToggle}>
@@ -145,7 +143,7 @@ export default class Day extends Component {
           ""
         )}
         {this.state.eventToggle ? (
-          <form className="eventInfo">
+          <form className="eventPopup">
             <button
               id="close-popup"
               type="button"
@@ -153,16 +151,15 @@ export default class Day extends Component {
             >
               X
             </button>
-            <div name="eventdate">1.2.1992</div>
-            <div name="event">Event</div>
-            <div name="eventdescription">Description:</div>
-            <div>
-              Event made
-              <br />
-              1.2.1992
-              <br />
-              By Emma
+            <div className="eventInfo">
+              <div name="eventdate">{this.props.fullDate.toDateString()}</div>
+              <div name="event">Event: {this.props.event.event.title}</div>
+              <div name="eventdescription">
+                Description: {this.props.event.event.description}
+              </div>
             </div>
+            <br />
+            <div className="eventMadeBy">Event made: 1.2.1992 By User</div>
           </form>
         ) : (
           ""

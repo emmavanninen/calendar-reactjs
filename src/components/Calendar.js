@@ -45,6 +45,7 @@ class Calendar extends Component {
               day={i + 1}
               month={this.state.month}
               year={this.state.year}
+              fullDate={new Date(this.state.year, this.state.month - 1, i)}
               createNewEvent={this.createNewEvent}
             />
           );
@@ -57,6 +58,7 @@ class Calendar extends Component {
                   day={i + 1}
                   month={this.state.month}
                   year={this.state.year}
+                  fullDate={new Date(this.state.year, this.state.month - 1, i + 1)}
                   createNewEvent={this.createNewEvent}
                   event={event}
                 />)
@@ -67,7 +69,6 @@ class Calendar extends Component {
            this.setState({
                currentMonth: items
            })
-        console.log(this.state.currentMonth);
 
         // return items;
       })
@@ -75,6 +76,7 @@ class Calendar extends Component {
   };
 
   render() {
+    
     return (
       <>
         <a href="/" className="navbar-brand">

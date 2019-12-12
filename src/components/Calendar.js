@@ -50,18 +50,16 @@ class Calendar extends Component {
           );
 
           result.filter(event => {
-            if (Number(event.dateID) === i) {
-              items.pop();
-              items.push(
-                <Day
+            if (Number(event.dateID)-1 === i) {
+              items[i]=
+                (<Day
                   key={i}
                   day={i + 1}
                   month={this.state.month}
                   year={this.state.year}
                   createNewEvent={this.createNewEvent}
                   event={event}
-                />
-              );
+                />)
             }
           });
         }

@@ -15,6 +15,15 @@ export default class Day extends Component {
     console.log("poop");
   };
 
+  getEvents = () => {
+
+    if (this.props.event === undefined) {
+      return;
+    } else {
+      return this.props.event.event.title
+    }
+  };
+
   currentDate = () => {};
 
   handlePopupToggle = () => {
@@ -35,43 +44,43 @@ export default class Day extends Component {
   };
 
   createEvent = e => {
-      console.log(`state`, this.state.newEvent);
+    console.log(`state`, this.state.newEvent);
     e.preventDefault();
 
-      this.props.createNewEvent(this.state.newEvent, this.state.newEventDesc, this.state.date)
+    this.props.createNewEvent(
+      this.state.newEvent,
+      this.state.newEventDesc,
+      this.state.date
+    );
 
-      
     const event = this.state.eventArr;
     event.push(
       <div className="event" onClick={this.handleEventToggle}>
-        Poop
+        {this.props.event.event.title}
       </div>
     );
     this.setState({
-      eventArr: event,
-    //   newEvent: this.state.newEvent,
-    //   newEventDesc: this.state.eventDesc
+      eventArr: event
+      //   newEvent: this.state.newEvent,
+      //   newEventDesc: this.state.eventDesc
     });
 
     this.handlePopupToggle();
   };
 
   handleChange = e => {
-      if (e.target.name === 'newEvent'){
-          this.setState({
-              newEvent: e.target.value,
-              date: this.getDate()
-          });
-      } else if (e.target.name === 'newEventDesc'){
-          this.setState({
-              newEventDesc: e.target.value,
-              date: this.getDate()
-          });
-      }
-
-
+    if (e.target.name === "newEvent") {
+      this.setState({
+        newEvent: e.target.value,
+        date: this.getDate()
+      });
+    } else if (e.target.name === "newEventDesc") {
+      this.setState({
+        newEventDesc: e.target.value,
+        date: this.getDate()
+      });
+    }
   };
-
 
   getDate = () => {
     const date = `${this.props.year}-${this.props.month}-${this.props.day}`;
@@ -87,6 +96,7 @@ export default class Day extends Component {
 
     return (
       <div className="day">
+       <p> {this.getEvents()}</p>
         <div className="date-title">
           <div>{this.state.day}</div>
           <button className="addEventBtn" onClick={this.handlePopupToggle}>

@@ -152,7 +152,8 @@ export default class Day extends Component {
               X
             </button>
             <div className="eventInfo">
-              <div name="eventdate">{this.props.fullDate.toDateString()}</div>
+              <div name="eventdate">{this.props.fullDate.toLocaleDateString('en-US', {timezone: "America/New_York"})}</div>
+                        <div name="eventdate">{this.props.fullDate.toLocaleTimeString('en-US')}</div>
               <div name="event">Event: {this.props.event.event.title}</div>
               <div name="eventdescription">
                 Description: {this.props.event.event.description}

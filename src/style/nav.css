@@ -1,0 +1,15 @@
+.navbar {
+    /* margin-top: 150px; */
+    /* position: fixed !important; */
+    display: flex;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.404);
+    width: 20vw;
+    height: 100vh;
+    /* justify-self: left; */
+}
+
+.error-warning{
+    background-color: red;
+}
+

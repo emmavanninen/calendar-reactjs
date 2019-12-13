@@ -79,10 +79,9 @@ class Calendar extends Component {
     
     return (
       <>
-        <a href="/" className="navbar-brand">
-          Calendar
-        </a>
+
         <div className="page">
+         <h1 className='month-title'>December 2019</h1>
           <div className="dates">
               {this.state.currentMonth}
           </div>

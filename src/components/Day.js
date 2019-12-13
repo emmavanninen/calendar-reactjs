@@ -97,9 +97,14 @@ export default class Day extends Component {
         <p onClick={this.handleEventToggle}> {this.getEvents()}</p>
         <div className="date-title">
           <div>{this.state.day}</div>
-          <button className="addEventBtn" onClick={this.handlePopupToggle}>
-            +
-          </button>
+          {/* <div className="addEventBtn" onClick={this.handlePopupToggle}> */}
+          <img
+            className="addEventBtn icon"
+            src="/add.png"
+            alt="add new event icon"
+            onClick={this.handlePopupToggle}
+          />
+          {/* </div> */}
         </div>
         <div className="events">
           <div>
@@ -114,13 +119,12 @@ export default class Day extends Component {
         </div>
         {this.state.popupToggle ? (
           <form className="addEventPopup" onSubmit={this.createEvent}>
-            <button
-              id="close-popup"
-              type="button"
+            <img
+              className="icon"
+              src="/close.png"
+            //   id="close-popup"
               onClick={this.handlePopupToggle}
-            >
-              X
-            </button>
+            />
             <div name="eventDate" value={this.getDate()}>
               {this.getDate()}
             </div>
@@ -152,8 +156,14 @@ export default class Day extends Component {
               X
             </button>
             <div className="eventInfo">
-              <div name="eventdate">{this.props.fullDate.toLocaleDateString('en-US', {timezone: "America/New_York"})}</div>
-                        <div name="eventdate">{this.props.fullDate.toLocaleTimeString('en-US')}</div>
+              <div name="eventdate">
+                {this.props.fullDate.toLocaleDateString("en-US", {
+                  timezone: "America/New_York"
+                })}
+              </div>
+              <div name="eventdate">
+                {this.props.fullDate.toLocaleTimeString("en-US")}
+              </div>
               <div name="event">Event: {this.props.event.event.title}</div>
               <div name="eventdescription">
                 Description: {this.props.event.event.description}

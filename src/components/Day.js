@@ -14,12 +14,22 @@ export default class Day extends Component {
     newEvent: "",
     newEventDesc: "",
     editEvent: this.props.events[0],
-    currentEvent: this.props.events[0]
+    currentEvent: this.props.events[0],
+    eventIndex: ""
   };
 
   getEvents = () => {
-    return this.props.events.map(event => {
-        return <p onClick={this.handleEventToggle}>{event.event.title}</p>;
+    return this.props.events.map((event, i) => {
+      return (
+        <p
+          key={i}
+          onClick={() => {
+            this.handleEventToggle(i);
+          }}
+        >
+          {event.event.title}
+        </p>
+      );
     });
   };
 
@@ -64,10 +74,13 @@ export default class Day extends Component {
     });
   };
 
-  handleEventToggle = () => {
+  handleEventToggle = i => {
+    console.log(i);
+
     this.setState(prevState => {
       return {
-        eventToggle: !prevState.eventToggle
+        eventToggle: !prevState.eventToggle,
+        eventIndex: i
       };
     });
   };
@@ -93,7 +106,7 @@ export default class Day extends Component {
 
     return (
       <div className="day">
-        <div className='events-of-day'>{this.getEvents()}</div>
+        <div className="events-of-day">{this.getEvents()}</div>
         <div className="date-title">
           <div>{this.state.day}</div>
           <img
@@ -200,6 +213,7 @@ export default class Day extends Component {
             {/* //TODO: && user */}
             {this.state.editToggle ? (
               <form action="" className="editform">
+                {console.log(`what here`, this.state)}
                 <Form.Group controlId="exampleForm.ControlSelect1 selecttime">
                   <Form.Label>Time: </Form.Label>
                   <Form.Control as="select" className="select">
@@ -228,12 +242,16 @@ export default class Day extends Component {
                 </Form.Group>
                 <input
                   name="newEvent"
-                  defaultValue={this.props.events[0].event.title}
+                  defaultValue={
+                    this.props.events[this.state.eventIndex].event.title
+                  }
                   onChange={this.handleEditEvent}
                 />
                 <input
                   name="newEventDesc"
-                  defaultValue={this.props.events[0].event.description}
+                  defaultValue={
+                    this.props.events[this.state.eventIndex].event.description
+                  }
                   onChange={this.handleEditEvent}
                 />
                 <button
@@ -258,10 +276,11 @@ export default class Day extends Component {
                 </div>
                 {/* TODO: change index */}
                 <div name="event">
-                  Event: {this.props.events[0].event.title}
+                  Event: {this.props.events[this.state.eventIndex].event.title}
                 </div>
                 <div name="eventdescription">
-                  Description: {this.props.events[0].event.description}
+                  Description:{" "}
+                  {this.props.events[this.state.eventIndex].event.description}
                 </div>
               </div>
             )}

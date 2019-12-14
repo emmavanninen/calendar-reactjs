@@ -170,14 +170,14 @@ console.log(`result email?`, result);
                     >
                       <input
                         type="email"
-                        placeholder="email"
+                        placeholder="Email"
                         name="email"
                         className="form-control"
                         onChange={this.handleOnCHange}
                       ></input>
                       <input
                         type="text"
-                        placeholder="password"
+                        placeholder="Password"
                         name="password"
                         className="form-control"
                         onChange={this.handleOnCHange}
@@ -202,14 +202,14 @@ console.log(`result email?`, result);
                     ></input>
                     <input
                       type="email"
-                      placeholder="email"
+                      placeholder="Email"
                       name="email"
                       className="form-control"
                       onChange={this.handleOnCHange}
                     ></input>
                     <input
                       type="text"
-                      placeholder="password"
+                      placeholder="Password"
                       name="password"
                       className="form-control"
                       onChange={this.handleOnCHange}

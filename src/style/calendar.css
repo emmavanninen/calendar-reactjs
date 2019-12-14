@@ -9,9 +9,9 @@
   align-items: center;
 } */
 
-.month-title{
-    text-align: left;
-    margin-bottom: 40px;
+.month-title {
+  text-align: left;
+  margin-bottom: 40px;
 }
 
 .page {
@@ -45,6 +45,10 @@
   grid-template-rows: 30% 70%;
 }
 
+.day:hover {
+  background-color: #16121698;
+}
+
 .date-title {
   grid-column: 2 / span 1;
   grid-row: 1;
@@ -54,6 +58,7 @@
 }
 
 .day p {
+  cursor: pointer;
   line-height: 12px;
   font-size: 12px;
   text-align: start;
@@ -64,6 +69,7 @@
   grid-row: 2;
   height: 100%;
   overflow: scroll;
+  height: max-content;
 }
 
 .addEventPopup {
@@ -72,16 +78,25 @@
   grid-row: 2;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
   padding: 10px;
-  height: 200px;
+  height: max-content;
   width: 300px;
   border: 1px solid #6b586bde;
   border-radius: 5px;
   background-color: #1a1718ef;
 }
 
+.form-group{
+    display: flex;
+    flex-direction: row;
+}
 
+select{
+    color: rgba(255, 255, 255, 0.884) !important;
+    background-color: rgba(0, 0, 0, 0) !important;
+    width: 50px !important;
+}
 
 button:focus {
   outline: none;

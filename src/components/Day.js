@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Form } from "react-bootstrap";
 
 export default class Day extends Component {
   state = {
@@ -122,12 +124,37 @@ export default class Day extends Component {
             <img
               className="icon"
               src="/close.png"
-            //   id="close-popup"
               onClick={this.handlePopupToggle}
             />
             <div name="eventDate" value={this.getDate()}>
               {this.getDate()}
             </div>
+            <Form.Group controlId="exampleForm.ControlSelect1 selecttime">
+              <Form.Label>Time: </Form.Label>
+              <Form.Control as="select" className='select'>
+                <option value='00'>00</option>
+                <option value='01'>01</option>
+                <option value='02'>02</option>
+                <option value='03'>03</option>
+                <option value='04'>04</option>
+                <option value='05'>05</option>
+                <option value='06'>06</option>
+                <option value='07'>07</option>
+                <option value='08'>08</option>
+                <option value='09'>09</option>
+                <option value='10'>10</option>
+                <option value='11'>11</option>
+                <option value='12'>12</option>
+              </Form.Control>
+              <Form.Control as="select">
+                <option value='00'>00</option>
+                <option value='30'>30</option>
+              </Form.Control>
+              <Form.Control as="select">
+                <option value='pm'>AM</option>
+                <option value='am'>PM</option>
+              </Form.Control>
+            </Form.Group>
             <input
               name="newEvent"
               placeholder="New event"
@@ -148,13 +175,11 @@ export default class Day extends Component {
         )}
         {this.state.eventToggle ? (
           <form className="eventPopup">
-            <button
-              id="close-popup"
-              type="button"
+            <img
+              className="icon"
+              src="/close.png"
               onClick={this.handleEventToggle}
-            >
-              X
-            </button>
+            />
             <div className="eventInfo">
               <div name="eventdate">
                 {this.props.fullDate.toLocaleDateString("en-US", {

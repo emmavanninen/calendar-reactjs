@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Form } from "react-bootstrap";
+import { apiEditEvent } from "../api/api";
+
 // import { CSSTransitionGroup } from "react-transition-group";
 
 export default class Day extends Component {
@@ -13,9 +15,9 @@ export default class Day extends Component {
     date: Date,
     newEvent: "",
     newEventDesc: "",
-    editEvent: this.props.events[0],
-    currentEvent: this.props.events[0],
-    eventIndex: ""
+    eventIndex: "",
+    editEvent: this.props.events[this.eventIndex],
+    currentEvent: this.props.events[this.eventIndex]
   };
 
   getEvents = () => {
@@ -59,10 +61,23 @@ export default class Day extends Component {
     }
   };
 
+  editEvent = stuff => {
+    console.log(stuff);
+
+    apiEditEvent(stuff)
+      .then(result => {
+        console.log(`result`, result);
+      })
+      .catch();
+  };
+
   handleEditEvent = e => {
+    //   console.log(e.target.value);
+
     this.setState({
       editEvent: e.target.value
     });
+    console.log(this.state.editEvent);
   };
 
   //! TOGGLES
@@ -75,8 +90,6 @@ export default class Day extends Component {
   };
 
   handleEventToggle = i => {
-    console.log(i);
-
     this.setState(prevState => {
       return {
         eventToggle: !prevState.eventToggle,
@@ -102,7 +115,9 @@ export default class Day extends Component {
   };
 
   render() {
-    const { editEvent } = this.props;
+    const {
+      //
+    } = this.props;
 
     return (
       <div className="day">
@@ -213,7 +228,6 @@ export default class Day extends Component {
             {/* //TODO: && user */}
             {this.state.editToggle ? (
               <form action="" className="editform">
-                {console.log(`what here`, this.state)}
                 <Form.Group controlId="exampleForm.ControlSelect1 selecttime">
                   <Form.Label>Time: </Form.Label>
                   <Form.Control as="select" className="select">
@@ -256,9 +270,10 @@ export default class Day extends Component {
                 />
                 <button
                   className="buttonClass addbtn"
-                  onClick={() => {
-                    editEvent(this.state.editEvent);
-                    this.editToggle();
+                  onClick={e => {
+                    e.preventDefault();
+                    this.editEvent(this.state.editEvent);
+                    this.handleEditToggle();
                   }}
                 >
                   Submit
@@ -274,7 +289,6 @@ export default class Day extends Component {
                 <div name="eventdate">
                   {this.props.fullDate.toLocaleTimeString("en-US")}
                 </div>
-                {/* TODO: change index */}
                 <div name="event">
                   Event: {this.props.events[this.state.eventIndex].event.title}
                 </div>

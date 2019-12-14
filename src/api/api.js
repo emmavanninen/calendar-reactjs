@@ -121,7 +121,7 @@ export const apiEditEvent = (event) =>{
             event
         };
 
-        Axios.put("/events/editevent", newObj)
+        Axios.put("/events/editevent", 'poop')
             .then(result => resolve(result.data))
             .catch(err => reject(err));
     });

@@ -3,6 +3,10 @@ import "../style/nav.css";
 import { apiAuth, apiRegister, apiLogin, apiLogout } from "../api/api";
 import setAuthJWT from "../api/setAuthJWT";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Tabs } from "react-bootstrap";
+import { Tab } from "react-bootstrap";
+// import { Sonnet } from "react-bootstrap";
+
 
 class Nav extends Component {
   state = {
@@ -147,9 +151,7 @@ console.log(`result email?`, result);
     return (
       <>
         <nav id="navigation" className="navbar">
-          <a href="/" className="navbar-brand">
-            Venue Booking
-          </a>
+          <h1 className="title">Venue Booking</h1>
           {this.state.isAuth ? (
             <form className="navbar-brand">
               <p>Logged in as {this.state.loggedinas}</p>
@@ -158,63 +160,67 @@ console.log(`result email?`, result);
               </button>
             </form>
           ) : (
-            <>
-              <form
+              <div className='login-register'>
+                <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
+                  <Tab eventKey="profile" title="Login">
+                    {" "}
+                    <form
+                      className="navbar-brand"
+                      onSubmit={this.handleSubmitLogin}
+                    >
+                      <input
+                        type="email"
+                        placeholder="email"
+                        name="email"
+                        className="form-control"
+                        onChange={this.handleOnCHange}
+                      ></input>
+                      <input
+                        type="text"
+                        placeholder="password"
+                        name="password"
+                        className="form-control"
+                        onChange={this.handleOnCHange}
+                      ></input>
+                      <button className="btn">
+                        Login
+                      </button>
+                    </form>
+                  </Tab>
+
+                  <Tab eventKey="register" title="Register">
+                                    <form
                 className="navbar-brand"
                 onSubmit={this.handleSubmitRegister}
               >
-                {/* <span
-                style={{ padding: "0px" }}
-                className={this.state.errorToggle ? "error-warning" : ""}
-              >
-                {this.state.errorToggle ? this.state.errorMsg : ""}
-              </span> */}
-                <input
-                  type="text"
-                  placeholder="Full Name"
-                  name="name"
-                  className="form-control"
-                  onChange={this.handleOnCHange}
-                ></input>
-                <input
-                  type="email"
-                  placeholder="email"
-                  name="email"
-                  className="form-control"
-                  onChange={this.handleOnCHange}
-                ></input>
-                <input
-                  type="text"
-                  placeholder="password"
-                  name="password"
-                  className="form-control"
-                  onChange={this.handleOnCHange}
-                ></input>
-                <button className="btn btn-outline-success my-2 my-sn-0">
-                  Register
-                </button>
-              </form>
-
-              <form className="navbar-brand" onSubmit={this.handleSubmitLogin}>
-                <input
-                  type="email"
-                  placeholder="email"
-                  name="email"
-                  className="form-control"
-                  onChange={this.handleOnCHange}
-                ></input>
-                <input
-                  type="text"
-                  placeholder="password"
-                  name="password"
-                  className="form-control"
-                  onChange={this.handleOnCHange}
-                ></input>
-                <button className="btn btn-outline-success my-2 my-sn-0">
-                  Login
-                </button>
-              </form>
-            </>
+                    <input
+                      type="text"
+                      placeholder="Full Name"
+                      name="name"
+                      className="form-control"
+                      onChange={this.handleOnCHange}
+                    ></input>
+                    <input
+                      type="email"
+                      placeholder="email"
+                      name="email"
+                      className="form-control"
+                      onChange={this.handleOnCHange}
+                    ></input>
+                    <input
+                      type="text"
+                      placeholder="password"
+                      name="password"
+                      className="form-control"
+                      onChange={this.handleOnCHange}
+                    ></input>
+                    <button className="btn">
+                      Register
+                    </button>
+                  </form>
+                </Tab>
+              </Tabs>
+            </div>
           )}
         </nav>
       </>

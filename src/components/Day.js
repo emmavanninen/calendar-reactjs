@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Form } from "react-bootstrap";
-import { apiEditEvent } from "../api/api";
 
 // import { CSSTransitionGroup } from "react-transition-group";
 
@@ -62,29 +61,18 @@ export default class Day extends Component {
     }
   };
 
-  editEvent = (title, desc) => {
-    console.log(title);
-    console.log(desc);
-
-      apiEditEvent(title, desc)
-      .then(result => {
-        console.log(`result`, result);
-      })
-      .catch();
-  };
-
   handleEditEvent = e => {
     //   console.log(e.target.value);
 
-        if(e.target.name === "newEvent") {
-          this.setState({
-              editedEventTitle: e.target.value
-          });
-      } else if (e.target.name === "newEventDesc") {
-          this.setState({
-              editedEventDesc: e.target.value
-          });
-      }
+    if (e.target.name === "newEvent") {
+      this.setState({
+        editedEventTitle: e.target.value
+      });
+    } else if (e.target.name === "newEventDesc") {
+      this.setState({
+        editedEventDesc: e.target.value
+      });
+    }
 
     console.log(this.state.editedEventTitle);
     console.log(this.state.editedEventDesc);
@@ -124,10 +112,7 @@ export default class Day extends Component {
   };
 
   render() {
-    const {
-      //
-    } = this.props;
-
+    const { editEvent } = this.props;
     return (
       <div className="day">
         <div className="events-of-day">{this.getEvents()}</div>
@@ -282,7 +267,11 @@ export default class Day extends Component {
                   onClick={e => {
                     e.preventDefault();
 
-                      this.editEvent(this.state.editedEventTitle, this.state.editedEventDesc );
+                    editEvent(
+                      this.props.events[this.state.eventIndex]._id,
+                      this.state.editedEventTitle,
+                      this.state.editedEventDesc
+                    );
                     this.handleEditToggle();
                   }}
                 >

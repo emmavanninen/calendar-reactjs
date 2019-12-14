@@ -113,16 +113,20 @@ export const apiCreateNewEvent = (title, desc, date) => {
   });
 };
 
-export const apiEditEvent = (event) =>{
-    console.log(`event to api.js`, event);
+export const apiEditEvent = (id, title, desc) =>{
+    console.log(`event to api.js`, id, title, desc);
     return new Promise((resolve, reject) => {
 
         const newObj = {
-            event
+            id,
+            title,
+            desc
         };
 
         Axios.put("/events/editevent", newObj)
-            .then(result => resolve(result.data))
+            .then(result => {
+                resolve(result.data)
+            })
             .catch(err => reject(err));
     });
     

@@ -1,5 +1,6 @@
 .App {
-  background-image: url("./a-d2iXz0AdlGA-unsplash.jpg");
+    /* url uses relative path */
+  background-image: url("/a-d2iXz0AdlGA-unsplash.jpg");
   background-repeat: no-repeat;
   background-size: 100%;
   display: flex;

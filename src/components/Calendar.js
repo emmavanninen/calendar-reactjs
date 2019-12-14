@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import "../style/calendar.css";
 import Day from "./Day";
-import { apiGetMonthEvents, apiCreateNewEvent } from "../api/api";
-
+import { apiGetMonthEvents, apiCreateNewEvent, apiEditEvent } from "../api/api";
 // import PropTypes from "prop-types";
 
 class Calendar extends Component {
@@ -21,16 +20,13 @@ class Calendar extends Component {
       .catch(error => console.log("error: ", error));
   };
 
-//   editEvent = (stuff) => {
-//       console.log(stuff);
-      
-//     apiEditEvent(stuff)
-//       .then(result => {
-//           console.log(`result`, result);
-          
-//       })
-//       .catch();
-//   };
+    editEvent = (id, title, desc) => {
+        apiEditEvent(id, title, desc)
+            .then(result => {
+                console.log(`result`, result);
+            })
+            .catch();
+    };
 
   daysInCurrentMonth = () => {
     let month = new Date().getMonth() + 1;
@@ -61,10 +57,13 @@ class Calendar extends Component {
               fullDate={new Date(this.state.year, this.state.month - 1, i)}
               createNewEvent={this.createNewEvent}
               editEvent={this.editEvent}
+                  editEvent={this.editEvent}
             />
           );
 
           result.filter(event => {
+            //   console.log(`!!!`, event);
+              
             if (Number(event.dateID) - 1 === i) {
               items[i].props.events.push(event);
             }

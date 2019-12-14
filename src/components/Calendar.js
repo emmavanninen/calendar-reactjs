@@ -9,13 +9,17 @@ class Calendar extends Component {
     //TODO: Update month
     month: new Date().getMonth() + 1,
     year: new Date().getYear() + 1900,
-    currentMonth: []
+    currentMonth: [],
+    latestEdit: {}
   };
 
   createNewEvent = (title, desc, date) => {
     apiCreateNewEvent(title, desc, date)
       .then(result => {
-        return result;
+         this.setState({
+             latestEdit: result
+         })
+          
       })
       .catch(error => console.log("error: ", error));
   };

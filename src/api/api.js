@@ -52,21 +52,14 @@ export const apiRegister = registerinfo => {
 };
 
 export const apiLogin = logininfo => {
-//   console.log(`whathere`, logininfo);
 
   return new Promise((resolve, reject) => {
     Axios.post("/users/login", logininfo, axiosConfig)
       .then(result => {
-        // console.log(`from backend to api.js`, result.data);
-
         const { token } = result.data;
-
         localStorage.setItem("jwtToken", token);
-
         const decoded = jwt_decode(token);
-
         setAuthJWT(token);
-
         resolve(decoded);
       })
       .catch(error => reject(error.response.data.message));
@@ -114,9 +107,7 @@ export const apiCreateNewEvent = (title, desc, date) => {
 };
 
 export const apiEditEvent = (id, title, desc) =>{
-    console.log(`event to api.js`, id, title, desc);
     return new Promise((resolve, reject) => {
-
         const newObj = {
             id,
             title,

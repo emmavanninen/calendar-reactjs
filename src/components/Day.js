@@ -17,7 +17,8 @@ export default class Day extends Component {
     eventIndex: "",
     editedEventTitle: this.props.events[this.eventIndex],
     editedEventDesc: this.props.events[this.eventIndex],
-    currentEvent: this.props.events[this.eventIndex]
+    currentEventTitle: this.props.events[this.eventIndex],
+    currentEventDesc: this.props.events[this.eventIndex],
   };
 
   getEvents = () => {
@@ -100,7 +101,8 @@ export default class Day extends Component {
     this.setState(prevState => {
       return {
         editToggle: !prevState.editToggle,
-        editEvent: this.state.currentEvent
+        editedEventTitle: this.state.currentEventTitle,
+        editedEventDesc: this.state.currentEventDesc
       };
     });
   };
@@ -264,6 +266,11 @@ export default class Day extends Component {
                 />
                 <button
                   className="buttonClass addbtn"
+                  disabled={
+                      this.state.editedEventTitle === this.state.currentEventTitle && this.state.editedEventDesc === this.state.currentEventDesc
+                      ? true
+                      : false
+                  }
                   onClick={e => {
                     e.preventDefault();
 

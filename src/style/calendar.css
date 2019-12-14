@@ -102,6 +102,11 @@ textarea {
   color: black !important;
 }
 
+.addbtn:disabled {
+  /* background-color: rgba(255, 255, 255, 0.829); */
+  color: rgba(177, 177, 177, 0.829) !important;
+}
+
 .form-group {
   display: flex;
   flex-direction: row;

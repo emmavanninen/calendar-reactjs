@@ -121,7 +121,7 @@ button:focus {
   flex-direction: column;
   /* justify-content: center; */
   align-items: flex-start;
-  height: 200px;
+  height: max-content;
   width: 300px;
   border: 1px solid #6b586bde;
   border-radius: 5px;

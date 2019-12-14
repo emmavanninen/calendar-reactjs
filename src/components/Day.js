@@ -12,8 +12,7 @@ export default class Day extends Component {
     day: this.props.day,
     date: Date,
     newEvent: "",
-    newEventDesc: "",
-    dummypoop: []
+    newEventDesc: ""
   };
 
   getEvents = () => {
@@ -191,13 +190,21 @@ export default class Day extends Component {
                 src="/close.png"
                 onClick={this.handleEventToggle}
               />
-              <img
-                className="icon"
-                src="/edit.png"
-                onClick={this.handleEditToggle}
-              />
+              {this.state.editToggle ? (
+                <img
+                  className="icon"
+                  src="/back.png"
+                  onClick={this.handleEditToggle}
+                />
+              ) : (
+                <img
+                  className="icon"
+                  src="/edit.png"
+                  onClick={this.handleEditToggle}
+                />
+              )}
             </div>
-             //TODO: && user
+            {/* //TODO: && user */}
             {this.state.editToggle ? (
               <form action="" className="editform">
                 <Form.Group controlId="exampleForm.ControlSelect1 selecttime">
@@ -226,14 +233,15 @@ export default class Day extends Component {
                     <option value="am">PM</option>
                   </Form.Control>
                 </Form.Group>
+                {console.log(`!!!`, this.state)}
                 <input
                   name="newEvent"
-                  defaultValue={this.state.newEvent}
+                  defaultValue={this.props.events[0].event.title}
                   onChange={this.handleChange}
                 />
                 <input
                   name="newEventDesc"
-                  defaultValue={this.state.newEventDesc}
+                  defaultValue={this.props.events[0].event.description}
                   onChange={this.handleChange}
                 />
 

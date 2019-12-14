@@ -273,6 +273,7 @@ export default class Day extends Component {
                   }
                   onClick={e => {
                     e.preventDefault();
+                    
 
                     editEvent(
                       this.props.events[this.state.eventIndex]._id,
@@ -280,6 +281,7 @@ export default class Day extends Component {
                       this.state.editedEventDesc
                     );
                     this.handleEditToggle();
+                    this.handleEventToggle();
                   }}
                 >
                   Submit

@@ -10,27 +10,24 @@ class Calendar extends Component {
     month: new Date().getMonth() + 1,
     year: new Date().getYear() + 1900,
     currentMonth: [],
-    latestEdit: {}
+    poop: ''
   };
 
   createNewEvent = (title, desc, date) => {
     apiCreateNewEvent(title, desc, date)
       .then(result => {
-         this.setState({
-             latestEdit: result
-         })
-          
+        return result;
       })
       .catch(error => console.log("error: ", error));
   };
 
-    editEvent = (id, title, desc) => {
-        apiEditEvent(id, title, desc)
-            .then(result => {
-                console.log(`result`, result);
-            })
-            .catch();
-    };
+  editEvent = (id, title, desc) => {
+    apiEditEvent(id, title, desc)
+      .then(() => {
+          this.createCurrentMonth(this.daysInCurrentMonth());
+      })
+        .catch(error => console.log("error: ", error));
+  };
 
   daysInCurrentMonth = () => {
     let month = new Date().getMonth() + 1;
@@ -39,8 +36,7 @@ class Calendar extends Component {
   };
 
   componentDidMount() {
-    console.log('did mount');
-    
+    console.log("did mount");
     this.createCurrentMonth(this.daysInCurrentMonth());
   }
 
@@ -61,13 +57,13 @@ class Calendar extends Component {
               fullDate={new Date(this.state.year, this.state.month - 1, i)}
               createNewEvent={this.createNewEvent}
               editEvent={this.editEvent}
-                  editEvent={this.editEvent}
+              editEvent={this.editEvent}
             />
           );
 
           result.filter(event => {
             //   console.log(`!!!`, event);
-              
+
             if (Number(event.dateID) - 1 === i) {
               items[i].props.events.push(event);
             }

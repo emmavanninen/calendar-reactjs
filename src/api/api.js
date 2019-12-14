@@ -107,6 +107,9 @@ export const apiCreateNewEvent = (title, desc, date) => {
 };
 
 export const apiEditEvent = (id, title, desc) =>{
+    
+    
+
     return new Promise((resolve, reject) => {
         const newObj = {
             id,

@@ -16,7 +16,8 @@ export default class Day extends Component {
     newEvent: "",
     newEventDesc: "",
     eventIndex: "",
-    editEvent: this.props.events[this.eventIndex],
+    editedEventTitle: this.props.events[this.eventIndex],
+    editedEventDesc: this.props.events[this.eventIndex],
     currentEvent: this.props.events[this.eventIndex]
   };
 
@@ -61,10 +62,11 @@ export default class Day extends Component {
     }
   };
 
-  editEvent = stuff => {
-    console.log(stuff);
+  editEvent = (title, desc) => {
+    console.log(title);
+    console.log(desc);
 
-    apiEditEvent(stuff)
+      apiEditEvent(title, desc)
       .then(result => {
         console.log(`result`, result);
       })
@@ -74,10 +76,18 @@ export default class Day extends Component {
   handleEditEvent = e => {
     //   console.log(e.target.value);
 
-    this.setState({
-      editEvent: e.target.value
-    });
-    console.log(this.state.editEvent);
+        if(e.target.name === "newEvent") {
+          this.setState({
+              editedEventTitle: e.target.value
+          });
+      } else if (e.target.name === "newEventDesc") {
+          this.setState({
+              editedEventDesc: e.target.value
+          });
+      }
+
+    console.log(this.state.editedEventTitle);
+    console.log(this.state.editedEventDesc);
   };
 
   //! TOGGLES
@@ -100,7 +110,6 @@ export default class Day extends Component {
 
   handleEditToggle = () => {
     this.setState(prevState => {
-      //   console.log(this.state.editToggle);
       return {
         editToggle: !prevState.editToggle,
         editEvent: this.state.currentEvent
@@ -272,7 +281,8 @@ export default class Day extends Component {
                   className="buttonClass addbtn"
                   onClick={e => {
                     e.preventDefault();
-                    this.editEvent(this.state.editEvent);
+
+                      this.editEvent(this.state.editedEventTitle, this.state.editedEventDesc );
                     this.handleEditToggle();
                   }}
                 >

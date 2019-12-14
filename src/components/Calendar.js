@@ -34,7 +34,7 @@ class Calendar extends Component {
   createCurrentMonth = month => {
     apiGetMonthEvents(this.state.month, this.state.year)
       .then(result => {
-        console.log(`all`, result);
+        // console.log(`all`, result);
         let items = [];
 
         for (let i = 0; i < month; i++) {

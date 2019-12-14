@@ -7,7 +7,6 @@ import { Tabs } from "react-bootstrap";
 import { Tab } from "react-bootstrap";
 // import { Sonnet } from "react-bootstrap";
 
-
 class Nav extends Component {
   state = {
     name: "",
@@ -21,8 +20,8 @@ class Nav extends Component {
   componentDidMount = () => {
     apiAuth()
       .then(userObj => {
-          console.log(`userObj`, userObj);
-          
+        console.log(`userObj`, userObj);
+
         this.setState(
           {
             isAuth: true,
@@ -67,7 +66,7 @@ class Nav extends Component {
       })
         .then(result => {
           const { email } = result;
-console.log(`result email?`, result);
+          console.log(`result email?`, result);
 
           this.setState(
             {
@@ -79,8 +78,7 @@ console.log(`result email?`, result);
               errorMsg: ""
             },
             () => {
-              console.log('you registered a user');
-              
+              console.log("you registered a user");
             }
           );
         })
@@ -117,8 +115,7 @@ console.log(`result email?`, result);
               errorMsg: ""
             },
             () => {
-              console.log('poop');
-              
+              console.log("poop");
             }
           );
         })
@@ -154,45 +151,44 @@ console.log(`result email?`, result);
           <h1 className="title">Venue Booking</h1>
           {this.state.isAuth ? (
             <form className="navbar-brand">
-              <p>Logged in as {this.state.loggedinas}</p>
+              <p>Logged in as</p>
+              <p>{this.state.loggedinas}</p>
               <button onClick={this.handleLogout} className="logout-btn">
                 Log Out
               </button>
             </form>
           ) : (
-              <div className='login-register'>
-                <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
-                  <Tab eventKey="profile" title="Login">
-                    {" "}
-                    <form
-                      className="navbar-brand"
-                      onSubmit={this.handleSubmitLogin}
-                    >
-                      <input
-                        type="email"
-                        placeholder="Email"
-                        name="email"
-                        className="form-control"
-                        onChange={this.handleOnCHange}
-                      ></input>
-                      <input
-                        type="text"
-                        placeholder="Password"
-                        name="password"
-                        className="form-control"
-                        onChange={this.handleOnCHange}
-                      ></input>
-                      <button className="btn">
-                        Login
-                      </button>
-                    </form>
-                  </Tab>
+            <div className="login-register">
+              <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
+                <Tab eventKey="profile" title="Login">
+                  {" "}
+                  <form
+                    className="navbar-brand"
+                    onSubmit={this.handleSubmitLogin}
+                  >
+                    <input
+                      type="email"
+                      placeholder="Email"
+                      name="email"
+                      className="form-control"
+                      onChange={this.handleOnCHange}
+                    ></input>
+                    <input
+                      type="text"
+                      placeholder="Password"
+                      name="password"
+                      className="form-control"
+                      onChange={this.handleOnCHange}
+                    ></input>
+                    <button className="btn">Login</button>
+                  </form>
+                </Tab>
 
-                  <Tab eventKey="register" title="Register">
-                                    <form
-                className="navbar-brand"
-                onSubmit={this.handleSubmitRegister}
-              >
+                <Tab eventKey="register" title="Register">
+                  <form
+                    className="navbar-brand"
+                    onSubmit={this.handleSubmitRegister}
+                  >
                     <input
                       type="text"
                       placeholder="Full Name"
@@ -214,9 +210,7 @@ console.log(`result email?`, result);
                       className="form-control"
                       onChange={this.handleOnCHange}
                     ></input>
-                    <button className="btn">
-                      Register
-                    </button>
+                    <button className="btn">Register</button>
                   </form>
                 </Tab>
               </Tabs>

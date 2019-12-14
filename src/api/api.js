@@ -8,7 +8,7 @@ export const apiAuth = () => {
     const decoded = jwt_decode(token);
     const currentTime = Date.now() / 1000;
 
-    console.log(`decoded`, decoded);
+    // console.log(`decoded`, decoded);
     
 
     if (decoded.exp < currentTime) {
@@ -31,12 +31,12 @@ export const apiAuth = () => {
 };
 
 export const apiRegister = registerinfo => {
-  console.log(registerinfo);
+//   console.log(registerinfo);
 
   return new Promise((resolve, reject) => {
     Axios.post("/users/register", registerinfo, axiosConfig)
       .then(result => {
-        console.log(`from backend to api.js`, result);
+        // console.log(`from backend to api.js`, result);
         const { token } = result.data;
         
         localStorage.setItem("jwtToken", token);
@@ -52,12 +52,12 @@ export const apiRegister = registerinfo => {
 };
 
 export const apiLogin = logininfo => {
-  console.log(`whathere`, logininfo);
+//   console.log(`whathere`, logininfo);
 
   return new Promise((resolve, reject) => {
     Axios.post("/users/login", logininfo, axiosConfig)
       .then(result => {
-        console.log(`from backend to api.js`, result.data);
+        // console.log(`from backend to api.js`, result.data);
 
         const { token } = result.data;
 
@@ -82,8 +82,8 @@ export const apiLogout = logoutinfo => {
 }
 
 export const apiGetMonthEvents = (month, year) => {
-  console.log(month);
-  console.log(year);
+//   console.log(month);
+//   console.log(year);
 
   return new Promise((resolve, reject) => {
     Axios.get(`/events?yearmonth=${year}${month}`)

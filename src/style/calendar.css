@@ -128,6 +128,16 @@ button:focus {
   background-color: #1a1718ef;
 }
 
+.event-icons{
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 20px;
+    width: 100%;
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+}
+
 .eventInfo {
   font-size: 13px;
   text-align: start;

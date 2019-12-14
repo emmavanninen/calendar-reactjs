@@ -18,18 +18,8 @@ export default class Day extends Component {
   };
 
   getEvents = () => {
-    // console.log(this.props.day, this.props.events);
-
-    //TODO: WHY ISNT LOOP OR MAP WORKING?!?!?!?
-
-    for (let i of this.props.events) {
-      // console.log(i);
-      return <p onClick={this.handleEventToggle}>{i.event.title}</p>;
-    }
-
-    this.props.events.map(event => {
-      //   console.log(`!!!!`, event.event.title)
-      return event.event.title;
+    return this.props.events.map(event => {
+        return <p onClick={this.handleEventToggle}>{event.event.title}</p>;
     });
   };
 
@@ -103,7 +93,7 @@ export default class Day extends Component {
 
     return (
       <div className="day">
-        {this.getEvents()}
+        <div className='events-of-day'>{this.getEvents()}</div>
         <div className="date-title">
           <div>{this.state.day}</div>
           <img

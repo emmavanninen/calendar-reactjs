@@ -56,6 +56,14 @@
   justify-content: space-between;
 }
 
+.events-of-day {
+  grid-column: 1 / span 3;
+  grid-row: 2;
+  height: 100%;
+  overflow: scroll;
+  height: max-content;
+}
+
 .day p {
   cursor: pointer;
   line-height: 12px;
@@ -64,11 +72,6 @@
   padding-top: 5px;
   padding-left: 5px;
   margin: 0;
-  grid-column: 1 / span 3;
-  grid-row: 2;
-  height: 100%;
-  overflow: scroll;
-  height: max-content;
 }
 
 .addEventPopup {
@@ -86,13 +89,17 @@
   border-radius: 5px;
   background-color: #1a1718ef;
 }
-button, input, optgroup, select, textarea{
-    color: white;
+button,
+input,
+optgroup,
+select,
+textarea {
+  color: white;
 }
 
-.addbtn{
-    background-color: rgba(255, 255, 255, 0.829);
-    color: black !important;
+.addbtn {
+  background-color: rgba(255, 255, 255, 0.829);
+  color: black !important;
 }
 
 .form-group {
@@ -128,14 +135,14 @@ button:focus {
   background-color: #1a1718ef;
 }
 
-.event-icons{
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-bottom: 20px;
-    width: 100%;
-display: flex;
-flex-direction: row;
-justify-content: space-between;
+.event-icons {
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .eventInfo {

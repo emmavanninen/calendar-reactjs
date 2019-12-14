@@ -113,6 +113,21 @@ export const apiCreateNewEvent = (title, desc, date) => {
   });
 };
 
+export const apiEditEvent = (event) =>{
+    console.log(`event to api.js`, event);
+    return new Promise((resolve, reject) => {
+
+        const newObj = {
+            event
+        };
+
+        Axios.put("/events/editevent", newObj)
+            .then(result => resolve(result.data))
+            .catch(err => reject(err));
+    });
+    
+}
+
 const axiosConfig = {
   headers: {
     "Content-Type": "application/json;charset=UTF-8",

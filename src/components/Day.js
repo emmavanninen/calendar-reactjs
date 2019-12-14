@@ -12,7 +12,9 @@ export default class Day extends Component {
     day: this.props.day,
     date: Date,
     newEvent: "",
-    newEventDesc: ""
+    newEventDesc: "",
+    editEvent: this.props.events[0],
+    currentEvent: this.props.events[0]
   };
 
   getEvents = () => {
@@ -30,8 +32,6 @@ export default class Day extends Component {
       return event.event.title;
     });
   };
-
-  currentDate = () => {};
 
   createEvent = e => {
     e.preventDefault();
@@ -59,7 +59,11 @@ export default class Day extends Component {
     }
   };
 
-  editEvent = () => {};
+  handleEditEvent = e => {
+    this.setState({
+      editEvent: e.target.value
+    });
+  };
 
   //! TOGGLES
   handlePopupToggle = () => {
@@ -76,16 +80,14 @@ export default class Day extends Component {
         eventToggle: !prevState.eventToggle
       };
     });
-    console.log(this.props);
   };
 
   handleEditToggle = () => {
     this.setState(prevState => {
-      console.log(this.state.editToggle);
-
+      //   console.log(this.state.editToggle);
       return {
-        editToggle: !prevState.editToggle
-        //   newEditTodo: this.state.currentTodo
+        editToggle: !prevState.editToggle,
+        editEvent: this.state.currentEvent
       };
     });
   };
@@ -97,9 +99,7 @@ export default class Day extends Component {
   };
 
   render() {
-    const {
-      //
-    } = this.props;
+    const { editEvent } = this.props;
 
     return (
       <div className="day">
@@ -131,6 +131,7 @@ export default class Day extends Component {
             <img
               className="icon"
               src="/close.png"
+              alt="close icon"
               onClick={this.handlePopupToggle}
             />
             <div name="eventDate" value={this.getDate()}>
@@ -174,7 +175,6 @@ export default class Day extends Component {
               value={this.state.newEventDesc}
               onChange={this.handleChange}
             />
-
             <button className="buttonClass addbtn">Add Event</button>
           </form>
         ) : (
@@ -188,18 +188,21 @@ export default class Day extends Component {
               <img
                 className="icon"
                 src="/close.png"
+                alt="close icon"
                 onClick={this.handleEventToggle}
               />
               {this.state.editToggle ? (
                 <img
                   className="icon"
                   src="/back.png"
+                  alt="back icon"
                   onClick={this.handleEditToggle}
                 />
               ) : (
                 <img
                   className="icon"
                   src="/edit.png"
+                  alt="edit icon"
                   onClick={this.handleEditToggle}
                 />
               )}
@@ -233,19 +236,25 @@ export default class Day extends Component {
                     <option value="am">PM</option>
                   </Form.Control>
                 </Form.Group>
-                {console.log(`!!!`, this.state)}
                 <input
                   name="newEvent"
                   defaultValue={this.props.events[0].event.title}
-                  onChange={this.handleChange}
+                  onChange={this.handleEditEvent}
                 />
                 <input
                   name="newEventDesc"
                   defaultValue={this.props.events[0].event.description}
-                  onChange={this.handleChange}
+                  onChange={this.handleEditEvent}
                 />
-
-                <button className="buttonClass addbtn">Submit</button>
+                <button
+                  className="buttonClass addbtn"
+                  onClick={() => {
+                    editEvent(this.state.editEvent);
+                    this.editToggle();
+                  }}
+                >
+                  Submit
+                </button>
               </form>
             ) : (
               <div className="eventInfo">

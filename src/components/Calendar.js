@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "../style/calendar.css";
 import Day from "./Day";
-import { apiGetMonthEvents, apiCreateNewEvent } from "../api/api";
+import { apiGetMonthEvents, apiCreateNewEvent, apiEditEvent } from "../api/api";
 
 // import PropTypes from "prop-types";
 
@@ -21,6 +21,17 @@ class Calendar extends Component {
       .catch(error => console.log("error: ", error));
   };
 
+  editEvent = (stuff) => {
+      console.log('poop');
+      
+    apiEditEvent(stuff)
+      .then(result => {
+          console.log(`result`, result);
+          
+      })
+      .catch();
+  };
+
   daysInCurrentMonth = () => {
     let month = new Date().getMonth() + 1;
     let year = new Date().getYear() + 1900;
@@ -28,6 +39,8 @@ class Calendar extends Component {
   };
 
   componentDidMount() {
+    console.log('did mount');
+    
     this.createCurrentMonth(this.daysInCurrentMonth());
   }
 
@@ -47,6 +60,7 @@ class Calendar extends Component {
               events={[]}
               fullDate={new Date(this.state.year, this.state.month - 1, i)}
               createNewEvent={this.createNewEvent}
+              editEvent={this.editEvent}
             />
           );
 
@@ -60,8 +74,6 @@ class Calendar extends Component {
         this.setState({
           currentMonth: items
         });
-
-        
       })
       .catch(error => console.log("error: ", error));
   };

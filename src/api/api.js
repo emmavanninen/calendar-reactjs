@@ -22,7 +22,7 @@ export const apiAuth = () => {
 
       const user = {
         id: decoded.id,
-        name: decoded.name
+        name: decoded.email
       };
 
       resolve(user);

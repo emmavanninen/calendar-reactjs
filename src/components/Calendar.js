@@ -13,7 +13,6 @@ class Calendar extends Component {
     currentMonth: []
   };
 
-
   createNewEvent = (title, desc, date) => {
     apiCreateNewEvent(title, desc, date)
       .then(result => {
@@ -35,7 +34,7 @@ class Calendar extends Component {
   createCurrentMonth = month => {
     apiGetMonthEvents(this.state.month, this.state.year)
       .then(result => {
-        // console.log(`all`, result);
+        console.log(`all`, result);
         let items = [];
 
         for (let i = 0; i < month; i++) {
@@ -45,46 +44,34 @@ class Calendar extends Component {
               day={i + 1}
               month={this.state.month}
               year={this.state.year}
+              events={[]}
               fullDate={new Date(this.state.year, this.state.month - 1, i)}
               createNewEvent={this.createNewEvent}
             />
           );
 
           result.filter(event => {
-            if (Number(event.dateID)-1 === i) {
-              items[i]=
-                (<Day
-                  key={i}
-                  day={i + 1}
-                  month={this.state.month}
-                  year={this.state.year}
-                  fullDate={new Date(this.state.year, this.state.month - 1, i + 1)}
-                  createNewEvent={this.createNewEvent}
-                  event={event}
-                />)
+            if (Number(event.dateID) - 1 === i) {
+              items[i].props.events.push(event);
             }
           });
         }
 
-           this.setState({
-               currentMonth: items
-           })
+        this.setState({
+          currentMonth: items
+        });
 
-        // return items;
+        
       })
       .catch(error => console.log("error: ", error));
   };
 
   render() {
-    
     return (
       <>
-
         <div className="page">
-         <h1 className='month-title'>December 2019</h1>
-          <div className="dates">
-              {this.state.currentMonth}
-          </div>
+          <h1 className="month-title">December 2019</h1>
+          <div className="dates">{this.state.currentMonth}</div>
         </div>
       </>
     );

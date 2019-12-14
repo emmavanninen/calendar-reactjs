@@ -26,7 +26,7 @@ class Nav extends Component {
         this.setState(
           {
             isAuth: true,
-            loggedinas: userObj.name
+            loggedinas: userObj.email
           },
           () => {
             console.log(`when hitting componentdidmount`);
@@ -56,7 +56,7 @@ class Nav extends Component {
     if (
       this.state.email === "" ||
       this.state.password === "" ||
-      this.state.name === ""
+      this.state.email === ""
     ) {
       console.log("error");
     } else {
@@ -66,7 +66,7 @@ class Nav extends Component {
         password: this.state.password
       })
         .then(result => {
-          const { name } = result;
+          const { email } = result;
 console.log(`result email?`, result);
 
           this.setState(
@@ -74,7 +74,7 @@ console.log(`result email?`, result);
               email: "",
               password: "",
               isAuth: true,
-              loggedinas: name,
+              loggedinas: email,
               errorToggle: false,
               errorMsg: ""
             },
@@ -106,13 +106,13 @@ console.log(`result email?`, result);
         password: this.state.password
       })
         .then(result => {
-          const { name } = result;
+          const { email } = result;
           this.setState(
             {
               email: "",
               password: "",
               isAuth: true,
-              loggedinas: name,
+              loggedinas: email,
               errorToggle: false,
               errorMsg: ""
             },

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Form } from "react-bootstrap";
+// import { CSSTransitionGroup } from "react-transition-group";
 
 export default class Day extends Component {
   state = {
@@ -10,7 +11,8 @@ export default class Day extends Component {
     day: this.props.day,
     date: Date,
     newEvent: "",
-    newEventDesc: ""
+    newEventDesc: "",
+    dummypoop: []
   };
 
   newEventPopup = () => {
@@ -18,11 +20,18 @@ export default class Day extends Component {
   };
 
   getEvents = () => {
-    if (this.props.event === undefined) {
-      return;
-    } else {
-      return this.props.event.event.title;
+    // console.log(this.props.day, this.props.events);
+
+    //TODO WHY ISNT LOOP OR MAP WORKING?!?!?!?
+
+    for (let i of this.props.events) {
+      //   console.log(i);
+      return <p>{i.event.title}</p>;
     }
+    //     this.props.events.map(event => {
+    //       console.log(event.event.title);
+    //       console.log();
+    //     });
   };
 
   currentDate = () => {};
@@ -53,17 +62,17 @@ export default class Day extends Component {
       this.state.date
     );
 
-    const event = this.state.eventArr;
-    event.push(
-      <div className="event" onClick={this.handleEventToggle}>
-        {this.props.event.event.title}
-      </div>
-    );
-    this.setState({
-      eventArr: event
-      //   newEvent: this.state.newEvent,
-      //   newEventDesc: this.state.eventDesc
-    });
+    // const event = this.state.eventArr;
+    // event.push(
+    //   <div className="event" onClick={this.handleEventToggle}>
+    //     {this.props.events[0].event.title}
+    //   </div>
+    // );
+    // this.setState({
+    //   eventArr: event
+    //   //   newEvent: this.state.newEvent,
+    //   //   newEventDesc: this.state.eventDesc
+    // });
 
     this.handlePopupToggle();
   };
@@ -96,7 +105,7 @@ export default class Day extends Component {
 
     return (
       <div className="day">
-        <p onClick={this.handleEventToggle}> {this.getEvents()}</p>
+        {this.getEvents()}
         <div className="date-title">
           <div>{this.state.day}</div>
           {/* <div className="addEventBtn" onClick={this.handlePopupToggle}> */}
@@ -120,6 +129,7 @@ export default class Day extends Component {
           </div>
         </div>
         {this.state.popupToggle ? (
+          //   <CSSTransitionGroup transitionName='easepopup' transitionEnterTimeout={500}>
           <form className="addEventPopup" onSubmit={this.createEvent}>
             <img
               className="icon"
@@ -131,28 +141,28 @@ export default class Day extends Component {
             </div>
             <Form.Group controlId="exampleForm.ControlSelect1 selecttime">
               <Form.Label>Time: </Form.Label>
-              <Form.Control as="select" className='select'>
-                <option value='00'>00</option>
-                <option value='01'>01</option>
-                <option value='02'>02</option>
-                <option value='03'>03</option>
-                <option value='04'>04</option>
-                <option value='05'>05</option>
-                <option value='06'>06</option>
-                <option value='07'>07</option>
-                <option value='08'>08</option>
-                <option value='09'>09</option>
-                <option value='10'>10</option>
-                <option value='11'>11</option>
-                <option value='12'>12</option>
+              <Form.Control as="select" className="select">
+                <option value="00">00</option>
+                <option value="01">01</option>
+                <option value="02">02</option>
+                <option value="03">03</option>
+                <option value="04">04</option>
+                <option value="05">05</option>
+                <option value="06">06</option>
+                <option value="07">07</option>
+                <option value="08">08</option>
+                <option value="09">09</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
               </Form.Control>
               <Form.Control as="select">
-                <option value='00'>00</option>
-                <option value='30'>30</option>
+                <option value="00">00</option>
+                <option value="30">30</option>
               </Form.Control>
               <Form.Control as="select">
-                <option value='pm'>AM</option>
-                <option value='am'>PM</option>
+                <option value="pm">AM</option>
+                <option value="am">PM</option>
               </Form.Control>
             </Form.Group>
             <input
@@ -168,9 +178,10 @@ export default class Day extends Component {
               onChange={this.handleChange}
             />
 
-            <button className="buttonClass">Add Event</button>
+            <button className="buttonClass addbtn">Add Event</button>
           </form>
         ) : (
+          //   </CSSTransitionGroup>
           ""
         )}
         {this.state.eventToggle ? (
@@ -189,9 +200,9 @@ export default class Day extends Component {
               <div name="eventdate">
                 {this.props.fullDate.toLocaleTimeString("en-US")}
               </div>
-              <div name="event">Event: {this.props.event.event.title}</div>
+              <div name="event">Event: {this.props.events.event.title}</div>
               <div name="eventdescription">
-                Description: {this.props.event.event.description}
+                Description: {this.props.events.event.description}
               </div>
             </div>
             <br />

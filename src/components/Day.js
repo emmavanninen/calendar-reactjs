@@ -12,6 +12,7 @@ export default class Day extends Component {
     eventArr: [],
     day: this.props.day,
     date: Date,
+    time: [],
     newEvent: "",
     newEventDesc: "",
     eventIndex: "",
@@ -42,7 +43,10 @@ export default class Day extends Component {
     this.props.createNewEvent(
       this.state.newEvent,
       this.state.newEventDesc,
-      this.state.date
+      this.props.year,
+      this.props.month,
+      this.state.day,
+      this.state.time
     );
 
     this.handlePopupToggle();
@@ -59,12 +63,12 @@ export default class Day extends Component {
         newEventDesc: e.target.value,
         date: this.getDate()
       });
+    } else if (e.target.name === "hour" || e.target.name === "min") {
+      this.setState({ time: [...this.state.time, e.target.value] });
     }
   };
 
   handleEditEvent = e => {
-    //   console.log(e.target.value);
-
     if (e.target.name === "newEvent") {
       this.setState({
         editedEventTitle: e.target.value
@@ -74,9 +78,6 @@ export default class Day extends Component {
         editedEventDesc: e.target.value
       });
     }
-
-    console.log(this.state.editedEventTitle);
-    console.log(this.state.editedEventDesc);
   };
 
   //! TOGGLES
@@ -143,7 +144,13 @@ export default class Day extends Component {
             </div>
             <Form.Group controlId="exampleForm.ControlSelect1 selecttime">
               <Form.Label>Time: </Form.Label>
-              <Form.Control as="select" className="select">
+              <Form.Control
+                name="hour"
+                as="select"
+                className="select"
+                onChange={this.handleChange}
+              >
+                <option>h</option>
                 <option value="00">00</option>
                 <option value="01">01</option>
                 <option value="02">02</option>
@@ -157,14 +164,23 @@ export default class Day extends Component {
                 <option value="10">10</option>
                 <option value="11">11</option>
                 <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+                <option value="19">19</option>
+                <option value="20">20</option>
+                <option value="21">21</option>
+                <option value="22">22</option>
+                <option value="23">23</option>
+                <option value="24">24</option>
               </Form.Control>
-              <Form.Control as="select">
+              <Form.Control as="select" name="min" onChange={this.handleChange}>
+                <option>m</option>
                 <option value="00">00</option>
                 <option value="30">30</option>
-              </Form.Control>
-              <Form.Control as="select">
-                <option value="pm">AM</option>
-                <option value="am">PM</option>
               </Form.Control>
             </Form.Group>
             <input
@@ -193,7 +209,12 @@ export default class Day extends Component {
                 className="icon"
                 src="/close.png"
                 alt="close icon"
-                onClick={this.handleEventToggle}
+                onClick={() =>{
+                    this.handleEventToggle()
+                    if (this.state.editToggle){
+                        this.handleEditToggle()
+                    }
+                }}
               />
               {this.state.editToggle ? (
                 <img
@@ -208,9 +229,9 @@ export default class Day extends Component {
                     className="icon"
                     src="/delete.png"
                     alt="delete icon"
-                    onClick={()=>{
-                        deleteEvent(this.props.events[this.state.eventIndex]._id)
-                        this.handleEventToggle()
+                    onClick={() => {
+                      deleteEvent(this.props.events[this.state.eventIndex]._id);
+                      this.handleEventToggle();
                     }}
                   />
                   <img
@@ -296,8 +317,10 @@ export default class Day extends Component {
                     timezone: "America/New_York"
                   })}
                 </div>
-                <div name="eventdate">
-                  {this.props.fullDate.toLocaleTimeString("en-US")}
+                <div name="eventtime">
+                {this.props.events[
+                    this.state.eventIndex
+                  ].event.dateSet.slice(11,16)}
                 </div>
                 <div name="event">
                   Event: {this.props.events[this.state.eventIndex].event.title}

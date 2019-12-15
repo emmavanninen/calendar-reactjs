@@ -80,7 +80,7 @@ export const apiGetMonthEvents = (month, year) => {
     Axios.get(`/events?yearmonth=${year}${month}`)
       .then(events => {
         events = events.data.map(event => {
-          let day = event.event.date.slice(8, 10);
+          let day = event.event.dateSet.toString().slice(8, 10);
           day = day.replace(/^0/g, "");
           return (event = { ...event, dateID: day });
         });
@@ -90,29 +90,33 @@ export const apiGetMonthEvents = (month, year) => {
   });
 };
 
-export const apiCreateNewEvent = (title, desc, date) => {
+export const apiCreateNewEvent = (title, desc, year, month, day, time) => {
+  const dateSet = new Date(year, month - 1, day, time[0], time[1]);
+
   return new Promise((resolve, reject) => {
     const newObj = {
       title,
       desc,
-      date
+      dateSet
     };
 
     Axios.post("/events/createevent", newObj)
-      .then(event => resolve(event.data))
+      .then(event => {
+        console.log(event);
+
+        resolve(event.data);
+      })
       .catch(err => reject(err));
   });
 };
 
-export const apiDeleteEvent = (id) => {
-
-    return new Promise((resolve, reject) => {
-
-        Axios.delete(`/events/delete${id}`)
-            .then(event => resolve(event.data))
-            .catch(err => reject(err));
-    });
-}
+export const apiDeleteEvent = id => {
+  return new Promise((resolve, reject) => {
+    Axios.delete(`/events/delete${id}`)
+      .then(event => resolve(event.data))
+      .catch(err => reject(err));
+  });
+};
 
 export const apiEditEvent = (id, title, desc) => {
   return new Promise((resolve, reject) => {

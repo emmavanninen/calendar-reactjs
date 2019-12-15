@@ -18,8 +18,8 @@ class Calendar extends Component {
     poop: ""
   };
 
-  createNewEvent = (title, desc, date) => {
-    apiCreateNewEvent(title, desc, date)
+  createNewEvent = (title, desc, year, month, day, time) => {
+      apiCreateNewEvent(title, desc, year, month, day, time)
       .then(result => {
         this.createCurrentMonth(this.daysInCurrentMonth());
         return result;
@@ -57,7 +57,6 @@ class Calendar extends Component {
   createCurrentMonth = month => {
     apiGetMonthEvents(this.state.month, this.state.year)
       .then(result => {
-        // console.log(`all`, result);
         let items = [];
         for (let i = 0; i < month; i++) {
           items.push(

@@ -89,11 +89,19 @@ class Calendar extends Component {
       .catch(error => console.log("error: ", error));
   };
 
+  chooseMonth = () => {
+      
+  };
+
   render() {
     return (
       <>
         <div className="page">
-          <h1 className="month-title">December 2019</h1>
+          <div className="themonth">
+            <p>left</p>
+            <h1 className="month-title">December 2019</h1>
+            <p>right</p>
+          </div>
           <div className="dates">{this.state.currentMonth}</div>
         </div>
       </>

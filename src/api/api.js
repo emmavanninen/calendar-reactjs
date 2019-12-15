@@ -91,6 +91,7 @@ export const apiGetMonthEvents = (month, year) => {
 };
 
 export const apiCreateNewEvent = (title, desc, year, month, day, time) => {
+    //TODO: set proper timezone in the near future
   const dateSet = new Date(year, month - 1, day, time[0] - 5, time[1]).toString();
 
   return new Promise((resolve, reject) => {

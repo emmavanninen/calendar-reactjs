@@ -23,15 +23,15 @@ export default class Day extends Component {
   };
 
   getEvents = () => {
-    return this.props.events.map((event, i) => {
+      return this.props.events.map((event, i) => {
+        let timestamp = event.event.dateSet.slice(11, 16)
       return (
         <p
           key={i}
           onClick={() => {
             this.handleEventToggle(i);
           }}
-        >
-          {event.event.title}
+          >{timestamp} {event.event.title}
         </p>
       );
     });

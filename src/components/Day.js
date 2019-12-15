@@ -53,6 +53,7 @@ export default class Day extends Component {
   };
 
   handleChange = e => {
+      
     if (e.target.name === "newEvent") {
       this.setState({
         newEvent: e.target.value,
@@ -312,10 +313,8 @@ export default class Day extends Component {
               </form>
             ) : (
               <div className="eventInfo">
-                <div name="eventdate">
-                  {this.props.fullDate.toLocaleDateString("en-US", {
-                    timezone: "America/New_York"
-                  })}
+                <div name="eventdate">{this.props.month}/
+                  {this.props.day}/{this.props.year}
                 </div>
                 <div name="eventtime">
                 {this.props.events[

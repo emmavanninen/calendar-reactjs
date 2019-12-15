@@ -91,14 +91,18 @@ export const apiGetMonthEvents = (month, year) => {
 };
 
 export const apiCreateNewEvent = (title, desc, year, month, day, time) => {
-  const dateSet = new Date(year, month - 1, day, time[0], time[1]);
+  const dateSet = new Date(year, month - 1, day, time[0] - 5, time[1]).toString();
 
   return new Promise((resolve, reject) => {
     const newObj = {
+      year,
+      month,
       title,
       desc,
       dateSet
     };
+
+    console.log(`obj`, newObj);
 
     Axios.post("/events/createevent", newObj)
       .then(event => {

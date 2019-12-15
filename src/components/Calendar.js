@@ -19,6 +19,7 @@ class Calendar extends Component {
   };
 
   createNewEvent = (title, desc, year, month, day, time) => {
+      
       apiCreateNewEvent(title, desc, year, month, day, time)
       .then(result => {
         this.createCurrentMonth(this.daysInCurrentMonth());

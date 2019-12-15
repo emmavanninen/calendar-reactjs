@@ -18,7 +18,7 @@ export default class Day extends Component {
     editedEventTitle: this.props.events[this.eventIndex],
     editedEventDesc: this.props.events[this.eventIndex],
     currentEventTitle: this.props.events[this.eventIndex],
-    currentEventDesc: this.props.events[this.eventIndex],
+    currentEventDesc: this.props.events[this.eventIndex]
   };
 
   getEvents = () => {
@@ -114,7 +114,7 @@ export default class Day extends Component {
   };
 
   render() {
-    const { editEvent } = this.props;
+    const { editEvent, deleteEvent } = this.props;
     return (
       <div className="day">
         <div className="events-of-day">{this.getEvents()}</div>
@@ -127,17 +127,7 @@ export default class Day extends Component {
             onClick={this.handlePopupToggle}
           />
         </div>
-        <div className="events">
-          <div>
-            {this.state.eventArr.map((event, i) => {
-              return (
-                <div className="eventTitle" key={i}>
-                  {event}
-                </div>
-              );
-            })}
-          </div>
-        </div>
+        <div className="events"></div>
         {this.state.popupToggle ? (
           //   <CSSTransitionGroup transitionName='easepopup' transitionEnterTimeout={500}>
           // ! ADD EVENT POPUP
@@ -213,12 +203,23 @@ export default class Day extends Component {
                   onClick={this.handleEditToggle}
                 />
               ) : (
-                <img
-                  className="icon"
-                  src="/edit.png"
-                  alt="edit icon"
-                  onClick={this.handleEditToggle}
-                />
+                <>
+                  <img
+                    className="icon"
+                    src="/delete.png"
+                    alt="delete icon"
+                    onClick={()=>{
+                        deleteEvent(this.props.events[this.state.eventIndex]._id)
+                        this.handleEventToggle()
+                    }}
+                  />
+                  <img
+                    className="icon"
+                    src="/edit.png"
+                    alt="edit icon"
+                    onClick={this.handleEditToggle}
+                  />
+                </>
               )}
             </div>
             {/* //TODO: && user */}
@@ -267,13 +268,14 @@ export default class Day extends Component {
                 <button
                   className="buttonClass addbtn"
                   disabled={
-                      this.state.editedEventTitle === this.state.currentEventTitle && this.state.editedEventDesc === this.state.currentEventDesc
+                    this.state.editedEventTitle ===
+                      this.state.currentEventTitle &&
+                    this.state.editedEventDesc === this.state.currentEventDesc
                       ? true
                       : false
                   }
                   onClick={e => {
                     e.preventDefault();
-                    
 
                     editEvent(
                       this.props.events[this.state.eventIndex]._id,

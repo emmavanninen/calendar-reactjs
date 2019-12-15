@@ -1,7 +1,12 @@
 import React, { Component } from "react";
 import "../style/calendar.css";
 import Day from "./Day";
-import { apiGetMonthEvents, apiCreateNewEvent, apiEditEvent } from "../api/api";
+import {
+  apiGetMonthEvents,
+  apiCreateNewEvent,
+  apiEditEvent,
+  apiDeleteEvent
+} from "../api/api";
 // import PropTypes from "prop-types";
 
 class Calendar extends Component {
@@ -10,13 +15,22 @@ class Calendar extends Component {
     month: new Date().getMonth() + 1,
     year: new Date().getYear() + 1900,
     currentMonth: [],
-    poop: ''
+    poop: ""
   };
 
   createNewEvent = (title, desc, date) => {
     apiCreateNewEvent(title, desc, date)
       .then(result => {
+        this.createCurrentMonth(this.daysInCurrentMonth());
         return result;
+      })
+      .catch(error => console.log("error: ", error));
+  };
+
+  deleteEvent = id => {
+    apiDeleteEvent(id)
+      .then(() => {
+        this.createCurrentMonth(this.daysInCurrentMonth());
       })
       .catch(error => console.log("error: ", error));
   };
@@ -24,9 +38,9 @@ class Calendar extends Component {
   editEvent = (id, title, desc) => {
     apiEditEvent(id, title, desc)
       .then(() => {
-          this.createCurrentMonth(this.daysInCurrentMonth());
+        this.createCurrentMonth(this.daysInCurrentMonth());
       })
-        .catch(error => console.log("error: ", error));
+      .catch(error => console.log("error: ", error));
   };
 
   daysInCurrentMonth = () => {
@@ -45,7 +59,6 @@ class Calendar extends Component {
       .then(result => {
         // console.log(`all`, result);
         let items = [];
-
         for (let i = 0; i < month; i++) {
           items.push(
             <Day
@@ -54,16 +67,15 @@ class Calendar extends Component {
               month={this.state.month}
               year={this.state.year}
               events={[]}
-              fullDate={new Date(this.state.year, this.state.month - 1, i)}
+              fullDate={new Date(this.state.year, this.state.month - 1, i + 1)}
               createNewEvent={this.createNewEvent}
               editEvent={this.editEvent}
               editEvent={this.editEvent}
+              deleteEvent={this.deleteEvent}
             />
           );
 
           result.filter(event => {
-            //   console.log(`!!!`, event);
-
             if (Number(event.dateID) - 1 === i) {
               items[i].props.events.push(event);
             }

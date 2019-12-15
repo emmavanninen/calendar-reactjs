@@ -9,7 +9,6 @@ export const apiAuth = () => {
     const currentTime = Date.now() / 1000;
 
     // console.log(`decoded`, decoded);
-    
 
     if (decoded.exp < currentTime) {
       localStorage.removeItem("jwtToken");
@@ -31,14 +30,14 @@ export const apiAuth = () => {
 };
 
 export const apiRegister = registerinfo => {
-//   console.log(registerinfo);
+  //   console.log(registerinfo);
 
   return new Promise((resolve, reject) => {
     Axios.post("/users/register", registerinfo, axiosConfig)
       .then(result => {
         // console.log(`from backend to api.js`, result);
         const { token } = result.data;
-        
+
         localStorage.setItem("jwtToken", token);
 
         const decoded = jwt_decode(token);
@@ -52,7 +51,6 @@ export const apiRegister = registerinfo => {
 };
 
 export const apiLogin = logininfo => {
-
   return new Promise((resolve, reject) => {
     Axios.post("/users/login", logininfo, axiosConfig)
       .then(result => {
@@ -67,23 +65,23 @@ export const apiLogin = logininfo => {
 };
 
 export const apiLogout = logoutinfo => {
-    return new Promise((resolve, reject) => {
-        Axios.post("/users/logout", logoutinfo, axiosConfig)
-          .then(result => {})
-          .catch(err => reject(err));
-    })
-}
+  return new Promise((resolve, reject) => {
+    Axios.post("/users/logout", logoutinfo, axiosConfig)
+      .then(result => {})
+      .catch(err => reject(err));
+  });
+};
 
 export const apiGetMonthEvents = (month, year) => {
-//   console.log(month);
-//   console.log(year);
+  //   console.log(month);
+  //   console.log(year);
 
   return new Promise((resolve, reject) => {
     Axios.get(`/events?yearmonth=${year}${month}`)
       .then(events => {
         events = events.data.map(event => {
           let day = event.event.date.slice(8, 10);
-          day = day.replace(/0/g, "");
+          day = day.replace(/^0/g, "");
           return (event = { ...event, dateID: day });
         });
         resolve(events);
@@ -106,25 +104,31 @@ export const apiCreateNewEvent = (title, desc, date) => {
   });
 };
 
-export const apiEditEvent = (id, title, desc) =>{
-    
-    
+export const apiDeleteEvent = (id) => {
 
     return new Promise((resolve, reject) => {
-        const newObj = {
-            id,
-            title,
-            desc
-        };
 
-        Axios.put("/events/editevent", newObj)
-            .then(result => {
-                resolve(result.data)
-            })
+        Axios.delete(`/events/delete${id}`)
+            .then(event => resolve(event.data))
             .catch(err => reject(err));
     });
-    
 }
+
+export const apiEditEvent = (id, title, desc) => {
+  return new Promise((resolve, reject) => {
+    const newObj = {
+      id,
+      title,
+      desc
+    };
+
+    Axios.put("/events/editevent", newObj)
+      .then(result => {
+        resolve(result.data);
+      })
+      .catch(err => reject(err));
+  });
+};
 
 const axiosConfig = {
   headers: {

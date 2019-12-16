@@ -11,7 +11,7 @@ export default class Day extends Component {
     editToggle: false,
     eventArr: [],
     day: this.props.day,
-    date: Date,
+    // date: Date,
     time: [],
     newEvent: "",
     newEventDesc: "",
@@ -23,15 +23,16 @@ export default class Day extends Component {
   };
 
   getEvents = () => {
-      return this.props.events.map((event, i) => {
-        let timestamp = event.event.dateSet.slice(11, 16)
+    return this.props.events.map((event, i) => {
+      let timestamp = event.event.dateSet.slice(11, 16);
       return (
         <p
           key={i}
           onClick={() => {
             this.handleEventToggle(i);
           }}
-          >{timestamp} {event.event.title}
+        >
+          {timestamp} {event.event.title}
         </p>
       );
     });
@@ -53,16 +54,13 @@ export default class Day extends Component {
   };
 
   handleChange = e => {
-      
     if (e.target.name === "newEvent") {
       this.setState({
-        newEvent: e.target.value,
-        date: this.getDate()
+        newEvent: e.target.value
       });
     } else if (e.target.name === "newEventDesc") {
       this.setState({
-        newEventDesc: e.target.value,
-        date: this.getDate()
+        newEventDesc: e.target.value
       });
     } else if (e.target.name === "hour" || e.target.name === "min") {
       this.setState({ time: [...this.state.time, e.target.value] });
@@ -196,7 +194,7 @@ export default class Day extends Component {
               value={this.state.newEventDesc}
               onChange={this.handleChange}
             />
-            <button className="buttonClass addbtn">Add Event</button>
+                    <button className="buttonClass addbtn" disabled={this.state.time.length < 2 || this.state.newEvent === ''}>Add Event</button>
           </form>
         ) : (
           //   </CSSTransitionGroup>
@@ -210,11 +208,11 @@ export default class Day extends Component {
                 className="icon"
                 src="/close.png"
                 alt="close icon"
-                onClick={() =>{
-                    this.handleEventToggle()
-                    if (this.state.editToggle){
-                        this.handleEditToggle()
-                    }
+                onClick={() => {
+                  this.handleEventToggle();
+                  if (this.state.editToggle) {
+                    this.handleEditToggle();
+                  }
                 }}
               />
               {this.state.editToggle ? (
@@ -313,13 +311,14 @@ export default class Day extends Component {
               </form>
             ) : (
               <div className="eventInfo">
-                <div name="eventdate">{this.props.month}/
-                  {this.props.day}/{this.props.year}
+                <div name="eventdate">
+                  {this.props.month}/{this.props.day}/{this.props.year}
                 </div>
                 <div name="eventtime">
-                {this.props.events[
-                    this.state.eventIndex
-                  ].event.dateSet.slice(11,16)}
+                  {this.props.events[this.state.eventIndex].event.dateSet.slice(
+                    11,
+                    16
+                  )}
                 </div>
                 <div name="event">
                   Event: {this.props.events[this.state.eventIndex].event.title}

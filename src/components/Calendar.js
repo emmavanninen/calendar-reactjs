@@ -19,8 +19,7 @@ class Calendar extends Component {
   };
 
   createNewEvent = (title, desc, year, month, day, time) => {
-      
-      apiCreateNewEvent(title, desc, year, month, day, time)
+    apiCreateNewEvent(title, desc, year, month, day, time)
       .then(result => {
         this.createCurrentMonth(this.daysInCurrentMonth());
         return result;
@@ -78,6 +77,7 @@ class Calendar extends Component {
           result.filter(event => {
             if (Number(event.dateID) - 1 === i) {
               items[i].props.events.push(event);
+              // TODO: sort by time
             }
           });
         }
@@ -89,18 +89,18 @@ class Calendar extends Component {
       .catch(error => console.log("error: ", error));
   };
 
-  chooseMonth = () => {
-      
-  };
+  chooseMonth = () => {};
 
   render() {
     return (
       <>
         <div className="page">
           <div className="themonth">
-            <p>left</p>
-            <h1 className="month-title">December 2019</h1>
-            <p>right</p>
+            <h1 className="month-title">
+              <img className="icon" src="./left.png"></img>
+               December 2019 
+              <img className="icon" src="./right.png"></img>
+            </h1>
           </div>
           <div className="dates">{this.state.currentMonth}</div>
         </div>

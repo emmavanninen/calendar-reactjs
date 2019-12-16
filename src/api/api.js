@@ -51,10 +51,12 @@ export const apiLogin = logininfo => {
   return new Promise((resolve, reject) => {
     Axios.post("/users/login", logininfo, axiosConfig)
       .then(result => {
-        const { token } = result.data;
-        localStorage.setItem("jwtToken", token);
-        const decoded = jwt_decode(token);
-        setAuthJWT(token);
+          
+          const { token } = result.data;
+          localStorage.setItem("jwtToken", token);
+          const decoded = jwt_decode(token);
+          setAuthJWT(token);
+          console.log(`!!!!`, decoded);
         resolve(decoded);
       })
       .catch(error => reject(error.response.data.message));

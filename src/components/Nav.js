@@ -7,20 +7,18 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Tabs } from "react-bootstrap";
 import { Tab } from "react-bootstrap";
 
-
 class Nav extends Component {
   state = {
     name: "",
-    email: '',
+    email: "",
     password: "",
     isAuth: false,
-    loggedinas: '',
+    loggedinas: "",
     errorMsg: false,
     errorToggle: false
   };
 
   componentDidMount = () => {
-      
     apiAuth()
       .then(userObj => {
         this.setState(
@@ -29,7 +27,10 @@ class Nav extends Component {
             loggedinas: userObj.name
           },
           () => {
-            console.log(`when hitting componentdidmount`, this.state.loggedinas);
+            console.log(
+              `when hitting componentdidmount`,
+              this.state.loggedinas
+            );
 
             this.appHandleAuthSubmit();
           }
@@ -39,11 +40,9 @@ class Nav extends Component {
   };
 
   appHandleAuthSubmit = () => {
-      
     this.setState({
-      isAuth: true,
+      isAuth: true
     });
-
   };
 
   handleOnCHange = event => {
@@ -68,7 +67,7 @@ class Nav extends Component {
         password: this.state.password
       })
         .then(result => {
-            console.log(`user result?`, result.name);
+          console.log(`user result?`, result.name);
           const { name } = result.name;
 
           this.setState(
@@ -81,7 +80,7 @@ class Nav extends Component {
               errorMsg: ""
             },
             () => {
-                console.log("you registered a user", this.state.loggedinas);
+              console.log("you registered a user", this.state.loggedinas);
             }
           );
         })
@@ -103,17 +102,19 @@ class Nav extends Component {
       console.log("error");
     } else {
       apiLogin({
+        name: this.state.name,
         email: this.state.email,
         password: this.state.password
       })
         .then(result => {
-          const { email } = result;
+            console.log(`@@@`, result);
+            
           this.setState(
             {
               email: "",
               password: "",
               isAuth: true,
-              loggedinas: email,
+              loggedinas: result.name,
               errorToggle: false,
               errorMsg: ""
             },
@@ -147,10 +148,12 @@ class Nav extends Component {
     );
   };
 
-
+  loggedUser = () => {
+    return this.state.loggedinas;
+  };
 
   render() {
-    console.log(`user`, this.state.loggedinas);
+    const { loggedUser } = this.props;
     return (
       <>
         <nav id="navigation" className="navbar">
@@ -158,8 +161,7 @@ class Nav extends Component {
           {this.state.isAuth ? (
             <form className="navbar-brand">
               <p>Logged in as</p>
-              <User
-                loggedUser={this.state.loggedinas} />
+              <User loggedUser={this.loggedUser} />
               <button onClick={this.handleLogout} className="logout-btn">
                 Log Out
               </button>

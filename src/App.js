@@ -2,15 +2,17 @@ import React from "react";
 import "./style/App.css";
 import Calendar from "./components/Calendar";
 import Nav from "./components/Nav";
-// import {  } from "./components/User"
+import User from "./components/User"
 
 function App() {
+    console.log(`user`, User)
     
   return (
     <div className="App">
         <Nav 
         />
-      <Calendar />
+      <Calendar 
+      loggedUser={User}/>
     </div>
   );
 }

@@ -10,6 +10,7 @@ import { Tab } from "react-bootstrap";
 class Nav extends Component {
   state = {
     name: "",
+    email: '',
     password: "",
     isAuth: false,
     loggedinas: "",
@@ -18,6 +19,8 @@ class Nav extends Component {
   };
 
   componentDidMount = () => {
+      console.log(`!!`, this.state.loggedinas);
+      
     apiAuth()
       .then(userObj => {
         console.log(`userObj`, userObj);
@@ -25,12 +28,12 @@ class Nav extends Component {
         this.setState(
           {
             isAuth: true,
-            loggedinas: userObj.email
+            loggedinas: userObj.name
           },
           () => {
             console.log(`when hitting componentdidmount`);
 
-            // this.props.appHandleAuthSubmit();
+            this.appHandleAuthSubmit();
           }
         );
       })
@@ -65,20 +68,20 @@ class Nav extends Component {
         password: this.state.password
       })
         .then(result => {
-          const { email } = result;
-          console.log(`result email?`, result);
+            console.log(`user result?`, result.name);
+          const { name } = result.name;
 
           this.setState(
             {
               email: "",
               password: "",
               isAuth: true,
-              loggedinas: email,
+              loggedinas: '',
               errorToggle: false,
               errorMsg: ""
             },
             () => {
-              console.log("you registered a user");
+                console.log("you registered a user", this.state.loggedinas);
             }
           );
         })

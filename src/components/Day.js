@@ -194,7 +194,14 @@ export default class Day extends Component {
               value={this.state.newEventDesc}
               onChange={this.handleChange}
             />
-                    <button className="buttonClass addbtn" disabled={this.state.time.length < 2 || this.state.newEvent === ''}>Add Event</button>
+            <button
+              className="buttonClass addbtn"
+              disabled={
+                this.state.time.length < 2 || this.state.newEvent === ""
+              }
+            >
+              Add Event
+            </button>
           </form>
         ) : (
           //   </CSSTransitionGroup>
@@ -330,7 +337,14 @@ export default class Day extends Component {
               </div>
             )}
             <br />
-                    <div className="eventMadeBy">Event made: {this.props.events[this.state.eventIndex].dateCreated.slice(0, 10)} By User</div>
+            <div className="eventMadeBy">
+              Event made:{" "}
+              {this.props.events[this.state.eventIndex].dateCreated.slice(
+                0,
+                10
+              )}{" "}
+              By User
+            </div>
           </form>
         ) : (
           ""

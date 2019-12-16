@@ -5,11 +5,9 @@ import setAuthJWT from "./setAuthJWT";
 export const apiAuth = () => {
   return new Promise((resolve, reject) => {
     const token = localStorage.getItem("jwtToken");
+
     const decoded = jwt_decode(token);
     const currentTime = Date.now() / 1000;
-
-    // console.log(`decoded`, decoded);
-
     if (decoded.exp < currentTime) {
       localStorage.removeItem("jwtToken");
 
@@ -21,7 +19,8 @@ export const apiAuth = () => {
 
       const user = {
         id: decoded.id,
-        name: decoded.email
+        email: decoded.email,
+        name: decoded.name
       };
 
       resolve(user);
@@ -30,13 +29,13 @@ export const apiAuth = () => {
 };
 
 export const apiRegister = registerinfo => {
-  //   console.log(registerinfo);
+  console.log(`reginfo`, registerinfo);
 
   return new Promise((resolve, reject) => {
     Axios.post("/users/register", registerinfo, axiosConfig)
       .then(result => {
-        // console.log(`from backend to api.js`, result);
-        const { token } = result.data;
+        console.log(`user from backend to api.js`, result.data.token[0].token);
+        const { token } = result.data.token[0].token;
 
         localStorage.setItem("jwtToken", token);
 
@@ -44,9 +43,9 @@ export const apiRegister = registerinfo => {
 
         setAuthJWT(token);
 
-        resolve(decoded);
+        resolve(result.data);
       })
-      .catch(error => reject(error.response.data.message));
+      .catch(error => reject(error));
   });
 };
 
@@ -91,13 +90,16 @@ export const apiGetMonthEvents = (month, year) => {
 };
 
 export const apiCreateNewEvent = (title, desc, year, month, day, time) => {
+  //TODO: set proper timezone in the near future
+  const dateSet = new Date(
+    year,
+    month - 1,
+    day,
+    time[0] - 5,
+    time[1]
+  ).toString();
 
-    console.log(`desc:`, desc);
-    console.log(`desc type:`,typeof desc);
-
-    
-    //TODO: set proper timezone in the near future
-  const dateSet = new Date(year, month - 1, day, time[0] - 5, time[1]).toString();
+  console.log(typeof dateSet);
 
   return new Promise((resolve, reject) => {
     const newObj = {
@@ -108,10 +110,9 @@ export const apiCreateNewEvent = (title, desc, year, month, day, time) => {
       dateSet
     };
 
-
     Axios.post("/events/createevent", newObj)
       .then(event => {
-        console.log(event);
+        console.log(`from back`, event.data);
 
         resolve(event.data);
       })

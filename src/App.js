@@ -4,7 +4,6 @@ import Calendar from "./components/Calendar";
 import Nav from "./components/Nav";
 
 function App() {
-
     
   return (
     <div className="App">

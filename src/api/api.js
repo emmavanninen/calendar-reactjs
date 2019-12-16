@@ -22,19 +22,17 @@ export const apiAuth = () => {
         email: decoded.email,
         name: decoded.name
       };
-
+      
       resolve(user);
     }
   });
 };
 
 export const apiRegister = registerinfo => {
-  console.log(`reginfo`, registerinfo);
 
   return new Promise((resolve, reject) => {
     Axios.post("/users/register", registerinfo, axiosConfig)
       .then(result => {
-        console.log(`user from backend to api.js`, result.data.token[0].token);
         const { token } = result.data.token[0].token;
 
         localStorage.setItem("jwtToken", token);

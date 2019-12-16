@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import "../style/nav.css";
 import { apiAuth, apiRegister, apiLogin, apiLogout } from "../api/api";
+import User from "./User";
 import setAuthJWT from "../api/setAuthJWT";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Tabs } from "react-bootstrap";
 import { Tab } from "react-bootstrap";
-// import { Sonnet } from "react-bootstrap";
+
 
 class Nav extends Component {
   state = {
@@ -13,25 +14,22 @@ class Nav extends Component {
     email: '',
     password: "",
     isAuth: false,
-    loggedinas: "",
+    loggedinas: '',
     errorMsg: false,
     errorToggle: false
   };
 
   componentDidMount = () => {
-      console.log(`!!`, this.state.loggedinas);
       
     apiAuth()
       .then(userObj => {
-        console.log(`userObj`, userObj);
-
         this.setState(
           {
             isAuth: true,
             loggedinas: userObj.name
           },
           () => {
-            console.log(`when hitting componentdidmount`);
+            console.log(`when hitting componentdidmount`, this.state.loggedinas);
 
             this.appHandleAuthSubmit();
           }
@@ -41,9 +39,11 @@ class Nav extends Component {
   };
 
   appHandleAuthSubmit = () => {
+      
     this.setState({
-      isAuth: true
+      isAuth: true,
     });
+
   };
 
   handleOnCHange = event => {
@@ -76,7 +76,7 @@ class Nav extends Component {
               email: "",
               password: "",
               isAuth: true,
-              loggedinas: '',
+              loggedinas: name,
               errorToggle: false,
               errorMsg: ""
             },
@@ -147,7 +147,10 @@ class Nav extends Component {
     );
   };
 
+
+
   render() {
+    console.log(`user`, this.state.loggedinas);
     return (
       <>
         <nav id="navigation" className="navbar">
@@ -155,7 +158,8 @@ class Nav extends Component {
           {this.state.isAuth ? (
             <form className="navbar-brand">
               <p>Logged in as</p>
-              <p>{this.state.loggedinas}</p>
+              <User
+                loggedUser={this.state.loggedinas} />
               <button onClick={this.handleLogout} className="logout-btn">
                 Log Out
               </button>

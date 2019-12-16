@@ -330,7 +330,7 @@ export default class Day extends Component {
               </div>
             )}
             <br />
-            <div className="eventMadeBy">Event made: 1.2.1992 By User</div>
+                    <div className="eventMadeBy">Event made: {this.props.events[this.state.eventIndex].dateCreated.slice(0, 10)} By User</div>
           </form>
         ) : (
           ""

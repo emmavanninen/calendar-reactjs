@@ -1,22 +1,24 @@
-import React from "react";
+import React, { Component } from "react";
 import "./style/App.css";
 import Calendar from "./components/Calendar";
 import Nav from "./components/Nav";
-import User from "./components/User"
 
-function App() {
-    console.log(`user`, User)
-    
-  return (
-    <div className="App">
-        <Nav 
-        />
-      <Calendar 
-      loggedUser={User}/>
-    </div>
-  );
+class App extends Component {
+  state = {
+    isAuth: false,
+    loggedinas: ""
+  };
+
+  render() {
+    return (
+      <>
+        <div className="App">
+          <Nav />
+          <Calendar />
+        </div>
+      </>
+    );
+  }
 }
 
 export default App;
-
-    

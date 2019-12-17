@@ -4,9 +4,15 @@ import setAuthJWT from "./setAuthJWT";
 
 export const apiAuth = () => {
   return new Promise((resolve, reject) => {
+
     const token = localStorage.getItem("jwtToken");
 
+      if(token === null){
+          resolve(token)
+      }
     const decoded = jwt_decode(token);
+      console.log(`poop2`);
+    
     const currentTime = Date.now() / 1000;
     if (decoded.exp < currentTime) {
       localStorage.removeItem("jwtToken");
@@ -14,26 +20,20 @@ export const apiAuth = () => {
       setAuthJWT(null);
 
       reject(null);
+
     } else {
       setAuthJWT(token);
-
-      const user = {
-        id: decoded.id,
-        email: decoded.email,
-        name: decoded.name
-      };
-      
-      resolve(user);
+        
+      resolve(decoded);
     }
   });
 };
 
 export const apiRegister = registerinfo => {
-
   return new Promise((resolve, reject) => {
     Axios.post("/users/register", registerinfo, axiosConfig)
       .then(result => {
-        const { token } = result.data.token[0].token;
+        const { token } = result.data;
 
         localStorage.setItem("jwtToken", token);
 
@@ -41,7 +41,7 @@ export const apiRegister = registerinfo => {
 
         setAuthJWT(token);
 
-        resolve(result.data);
+        resolve(decoded);
       })
       .catch(error => reject(error));
   });
@@ -51,30 +51,31 @@ export const apiLogin = logininfo => {
   return new Promise((resolve, reject) => {
     Axios.post("/users/login", logininfo, axiosConfig)
       .then(result => {
-          
-          const { token } = result.data;
-          localStorage.setItem("jwtToken", token);
-          const decoded = jwt_decode(token);
-          setAuthJWT(token);
-          console.log(`!!!!`, decoded);
+        const { token } = result.data;
+        localStorage.setItem("jwtToken", token);
+        const decoded = jwt_decode(token);
+        setAuthJWT(token);
         resolve(decoded);
       })
-      .catch(error => reject(error.response.data.message));
+      .catch(error => reject(error));
   });
 };
 
-export const apiLogout = logoutinfo => {
+export const apiLogout = email => {
   return new Promise((resolve, reject) => {
-    Axios.post("/users/logout", logoutinfo, axiosConfig)
-      .then(result => {})
+    const newObj = {
+      email
+    };
+
+    Axios.post("/users/logout", newObj)
+      .then(result => {
+        resolve(result.data);
+      })
       .catch(err => reject(err));
   });
 };
 
 export const apiGetMonthEvents = (month, year) => {
-  //   console.log(month);
-  //   console.log(year);
-
   return new Promise((resolve, reject) => {
     Axios.get(`/events?yearmonth=${year}${month}`)
       .then(events => {
@@ -89,7 +90,15 @@ export const apiGetMonthEvents = (month, year) => {
   });
 };
 
-export const apiCreateNewEvent = (title, desc, year, month, day, time) => {
+export const apiCreateNewEvent = (
+  title,
+  desc,
+  year,
+  month,
+  day,
+  time,
+  user
+) => {
   //TODO: set proper timezone in the near future
   const dateSet = new Date(
     year,
@@ -99,21 +108,18 @@ export const apiCreateNewEvent = (title, desc, year, month, day, time) => {
     time[1]
   ).toString();
 
-  console.log(typeof dateSet);
-
   return new Promise((resolve, reject) => {
     const newObj = {
       year,
       month,
       title,
       desc,
-      dateSet
+      dateSet,
+      user
     };
 
     Axios.post("/events/createevent", newObj)
       .then(event => {
-        console.log(`from back`, event.data);
-
         resolve(event.data);
       })
       .catch(err => reject(err));

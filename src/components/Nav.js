@@ -20,29 +20,25 @@ class Nav extends Component {
 
   componentDidMount = () => {
     apiAuth()
-      .then(userObj => {
-        this.setState(
-          {
+      .then(decoded => {
+        if (decoded === null) {
+          this.setState({
+            isAuth: false,
+              email: '',
+              name: '',
+              loggedinas: ''
+          });
+        } else {
+          this.setState({
             isAuth: true,
-            loggedinas: userObj.name
-          },
-          () => {
-            console.log(
-              `when hitting componentdidmount`,
-              this.state.loggedinas
-            );
-
-            this.appHandleAuthSubmit();
-          }
-        );
+            email: decoded.email,
+            name: decoded.name,
+            loggedinas: decoded.name
+          });
+        }
+        console.log(`decoded`, decoded);
       })
       .catch(error => console.log(error));
-  };
-
-  appHandleAuthSubmit = () => {
-    this.setState({
-      isAuth: true
-    });
   };
 
   handleOnCHange = event => {
@@ -66,23 +62,15 @@ class Nav extends Component {
         email: this.state.email,
         password: this.state.password
       })
-        .then(result => {
-          console.log(`user result?`, result.name);
-          const { name } = result.name;
-
-          this.setState(
-            {
-              email: "",
-              password: "",
-              isAuth: true,
-              loggedinas: name,
-              errorToggle: false,
-              errorMsg: ""
-            },
-            () => {
-              console.log("you registered a user", this.state.loggedinas);
-            }
-          );
+        .then(decoded => {
+          this.setState({
+            email: decoded.email,
+            password: "",
+            isAuth: true,
+            loggedinas: decoded.name,
+            errorToggle: false,
+            errorMsg: ""
+          });
         })
         .catch(errormsg => {
           console.log(errormsg);
@@ -107,21 +95,14 @@ class Nav extends Component {
         password: this.state.password
       })
         .then(result => {
-            console.log(`@@@`, result);
-            
-          this.setState(
-            {
-              email: "",
-              password: "",
-              isAuth: true,
-              loggedinas: result.name,
-              errorToggle: false,
-              errorMsg: ""
-            },
-            () => {
-              console.log("poop");
-            }
-          );
+          this.setState({
+            email: result.email,
+            password: "",
+            isAuth: true,
+            loggedinas: result.name,
+            errorToggle: false,
+            errorMsg: ""
+          });
         })
         .catch(errormsg => {
           console.log(errormsg);
@@ -134,26 +115,26 @@ class Nav extends Component {
     }
   };
 
-  handleLogout = event => {
-    this.setState(
-      {
-        isAuth: false
-      },
-      () => {
-        //Todo: check api need
-        apiLogout();
+  handleLogout = user => {
+    apiLogout(user)
+      .then(result => {
         localStorage.removeItem("jwtToken");
         setAuthJWT(null);
-      }
-    );
+        this.setState({
+          isAuth: false,
+          loggedinas: ""
+        });
+      })
+      .catch();
   };
 
-  loggedUser = () => {
-    return this.state.loggedinas;
+  loggedInUser = () => {
+    if (this.state.isAuth) {
+      return this.state.loggedinas;
+    }
   };
 
   render() {
-    const { loggedUser } = this.props;
     return (
       <>
         <nav id="navigation" className="navbar">
@@ -161,8 +142,14 @@ class Nav extends Component {
           {this.state.isAuth ? (
             <form className="navbar-brand">
               <p>Logged in as</p>
-              <User loggedUser={this.loggedUser} />
-              <button onClick={this.handleLogout} className="logout-btn">
+              <User loggedInUser={this.loggedInUser} />
+              <button
+                className="logout-btn"
+                onClick={e => {
+                  e.preventDefault();
+                  this.handleLogout(this.state.email);
+                }}
+              >
                 Log Out
               </button>
             </form>

@@ -11,7 +11,6 @@ export default class Day extends Component {
     editToggle: false,
     eventArr: [],
     day: this.props.day,
-    // date: Date,
     time: [],
     newEvent: "",
     newEventDesc: "",
@@ -114,6 +113,7 @@ export default class Day extends Component {
   };
 
   render() {
+    //   { console.log(`curuser`, this.props.currentUser)}
     const { editEvent, deleteEvent } = this.props;
     return (
       <div className="day">
@@ -338,12 +338,11 @@ export default class Day extends Component {
             )}
             <br />
             <div className="eventMadeBy">
-              Event made:{" "}
-              {this.props.events[this.state.eventIndex].dateCreated.slice(
-                0,
-                10
-              )}{" "}
-              By User
+                        {console.log(this.props.events[this.state.eventIndex])}
+              Event made:{""}
+                {this.props.events[this.state.eventIndex].dateCreated.slice(0, 10)}{" "}
+                     <br/>   By  {" "}
+                {this.props.events[this.state.eventIndex].createdByUser}
             </div>
           </form>
         ) : (

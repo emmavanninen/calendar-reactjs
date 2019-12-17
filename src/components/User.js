@@ -5,7 +5,7 @@ import React from "react";
 const User = (props) => {
     return (
 //! no this in stateless component
-        <p className='loggedin-user'>{props.loggedUser()}
+        <p className='loggedin-user'>{props.loggedInUser()}
         </p>
     );
 };

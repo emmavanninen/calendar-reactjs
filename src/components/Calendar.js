@@ -5,7 +5,8 @@ import {
   apiGetMonthEvents,
   apiCreateNewEvent,
   apiEditEvent,
-  apiDeleteEvent
+  apiDeleteEvent,
+  apiAuth
 } from "../api/api";
 // import PropTypes from "prop-types";
 
@@ -14,15 +15,24 @@ class Calendar extends Component {
     //TODO: Update month
     month: new Date().getMonth() + 1,
     year: new Date().getYear() + 1900,
-    currentMonth: [],
-    poop: ""
+    user: ""
   };
 
   createNewEvent = (title, desc, year, month, day, time) => {
-    apiCreateNewEvent(title, desc, year, month, day, time)
-      .then(result => {
-        this.createCurrentMonth(this.daysInCurrentMonth());
-        return result;
+    apiAuth()
+      .then(decoded => {
+        let user = decoded.email;
+        //TODO fix to userID later
+        this.setState({
+          user: decoded.name
+        });
+
+        apiCreateNewEvent(title, desc, year, month, day, time, user)
+          .then(result => {
+            this.createCurrentMonth(this.daysInCurrentMonth());
+            return result;
+          })
+          .catch(error => console.log("error: ", error));
       })
       .catch(error => console.log("error: ", error));
   };
@@ -50,56 +60,71 @@ class Calendar extends Component {
   };
 
   componentDidMount() {
-    console.log("did mount");
     this.createCurrentMonth(this.daysInCurrentMonth());
   }
 
   createCurrentMonth = month => {
-    apiGetMonthEvents(this.state.month, this.state.year)
-      .then(result => {
-        let items = [];
-        for (let i = 0; i < month; i++) {
-          items.push(
-            <Day
-              key={i}
-              day={i + 1}
-              month={this.state.month}
-              year={this.state.year}
-              events={[]}
-              fullDate={new Date(this.state.year, this.state.month - 1, i + 1)}
-              createNewEvent={this.createNewEvent}
-              editEvent={this.editEvent}
-              editEvent={this.editEvent}
-              deleteEvent={this.deleteEvent}
-            />
-          );
-
-          result.filter(event => {
-            if (Number(event.dateID) - 1 === i) {
-              items[i].props.events.push(event);
-              // TODO: sort by time
-            }
-          });
-        }
-
+    apiAuth().then(decoded => {
+      if (!decoded) {
+          console.log('poop');
+          
+      } else {
+        //TODO fix to userID later
         this.setState({
-          currentMonth: items
+          user: decoded.name
         });
-      })
-      .catch(error => console.log("error: ", error));
+      }
+
+      apiGetMonthEvents(this.state.month, this.state.year)
+        .then(result => {
+          let items = [];
+          for (let i = 0; i < month; i++) {
+            items.push(
+              <Day
+                key={i}
+                day={i + 1}
+                month={this.state.month}
+                year={this.state.year}
+                events={[]}
+                fullDate={
+                  new Date(this.state.year, this.state.month - 1, i + 1)
+                }
+                currentUser={this.state.user}
+                createNewEvent={this.createNewEvent}
+                editEvent={this.editEvent}
+                deleteEvent={this.deleteEvent}
+              />
+            );
+
+            result.filter(event => {
+              if (Number(event.dateID) - 1 === i) {
+                items[i].props.events.push(event);
+                // TODO: sort by time
+              }
+              return;
+            });
+          }
+
+          this.setState({
+            currentMonth: items
+          });
+        })
+        .catch(error => console.log("error: ", error));
+    });
   };
 
-  chooseMonth = () => {};
-
   render() {
+    {
+      console.log(`current user`, this.state.user);
+    }
     return (
       <>
         <div className="page">
           <div className="themonth">
             <h1 className="month-title">
-              <img className="icon" src="./left.png"></img>
-               December 2019 
-              <img className="icon" src="./right.png"></img>
+              <img className="icon" src="./left.png" alt="icon"></img>
+              December 2019
+              <img className="icon" src="./right.png" alt="icon"></img>
             </h1>
           </div>
           <div className="dates">{this.state.currentMonth}</div>

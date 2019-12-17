@@ -66,8 +66,7 @@ class Calendar extends Component {
   createCurrentMonth = month => {
     apiAuth().then(decoded => {
       if (!decoded) {
-          console.log('poop');
-          
+          console.log('no user');
       } else {
         //TODO fix to userID later
         this.setState({
@@ -101,7 +100,7 @@ class Calendar extends Component {
                 items[i].props.events.push(event);
                 // TODO: sort by time
               }
-              return;
+              return result;
             });
           }
 
@@ -114,9 +113,7 @@ class Calendar extends Component {
   };
 
   render() {
-    {
-      console.log(`current user`, this.state.user);
-    }
+
     return (
       <>
         <div className="page">

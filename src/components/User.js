@@ -14,7 +14,7 @@ const User = (props) => {
 export default User;
 
 User.propTypes = {
-    user: PropTypes.arrayOf(
+    User: PropTypes.arrayOf(
         PropTypes.shape({
             loggedInUser: PropTypes.string,
         })

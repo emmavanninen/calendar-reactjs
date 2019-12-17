@@ -16,7 +16,7 @@ class Nav extends Component {
     isAuth: false,
     loggedinas: "",
     errorMsg: false,
-    errorToggle: false
+    errorToggle: false,
   };
 
   componentDidMount = () => {

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Form } from "react-bootstrap";
 import PropTypes from "prop-types";
+import Date from "./Date";
 
 // import { CSSTransitionGroup } from "react-transition-group";
 
@@ -10,7 +11,6 @@ export default class Day extends Component {
     popupToggle: false,
     eventToggle: false,
     editToggle: false,
-    eventArr: [],
     day: this.props.day,
     time: [],
     newEvent: "",
@@ -119,13 +119,17 @@ export default class Day extends Component {
       <div className="day">
         <div className="events-of-day">{this.getEvents()}</div>
         <div className="date-title">
-          <div>{this.state.day}</div>
-          <img
-            className="addEventBtn icon"
-            src="/add.png"
-            alt="add new event icon"
-            onClick={this.handlePopupToggle}
-          />
+          <Date num={this.state.day}/>
+          {this.props.currentUser ? (
+            <img
+              className="addEventBtn icon"
+              src="/add.png"
+              alt="add new event icon"
+              onClick={this.handlePopupToggle}
+            />
+          ) : (
+            ""
+          )}
         </div>
         <div className="events"></div>
         {this.state.popupToggle ? (
@@ -222,8 +226,8 @@ export default class Day extends Component {
                   }
                 }}
               />
-              {console.log(`cur`, this.props.currentUser)}
-                        {this.props.currentUser === this.props.events[this.state.eventIndex].createdByUser ? (
+              {this.props.currentUser ===
+              this.props.events[this.state.eventIndex].createdByUser ? (
                 this.state.editToggle ? (
                   <img
                     className="icon"
@@ -258,47 +262,51 @@ export default class Day extends Component {
             </div>
             {this.state.editToggle ? (
               <form action="" className="editform">
-                            <Form.Group controlId="exampleForm.ControlSelect1 selecttime">
-                                <Form.Label>Time: </Form.Label>
-                                <Form.Control
-                                    name="hour"
-                                    as="select"
-                                    className="select"
-                                    onChange={this.handleChange}
-                                >
-                                    <option>h</option>
-                                    <option value="00">00</option>
-                                    <option value="01">01</option>
-                                    <option value="02">02</option>
-                                    <option value="03">03</option>
-                                    <option value="04">04</option>
-                                    <option value="05">05</option>
-                                    <option value="06">06</option>
-                                    <option value="07">07</option>
-                                    <option value="08">08</option>
-                                    <option value="09">09</option>
-                                    <option value="10">10</option>
-                                    <option value="11">11</option>
-                                    <option value="12">12</option>
-                                    <option value="13">13</option>
-                                    <option value="14">14</option>
-                                    <option value="15">15</option>
-                                    <option value="16">16</option>
-                                    <option value="17">17</option>
-                                    <option value="18">18</option>
-                                    <option value="19">19</option>
-                                    <option value="20">20</option>
-                                    <option value="21">21</option>
-                                    <option value="22">22</option>
-                                    <option value="23">23</option>
-                                    <option value="24">24</option>
-                                </Form.Control>
-                                <Form.Control as="select" name="min" onChange={this.handleEditEvent}>
-                                    <option>m</option>
-                                    <option value="00">00</option>
-                                    <option value="30">30</option>
-                                </Form.Control>
-                            </Form.Group>
+                <Form.Group controlId="exampleForm.ControlSelect1 selecttime">
+                  <Form.Label>Time: </Form.Label>
+                  <Form.Control
+                    name="hour"
+                    as="select"
+                    className="select"
+                    onChange={this.handleChange}
+                  >
+                    <option>h</option>
+                    <option value="00">00</option>
+                    <option value="01">01</option>
+                    <option value="02">02</option>
+                    <option value="03">03</option>
+                    <option value="04">04</option>
+                    <option value="05">05</option>
+                    <option value="06">06</option>
+                    <option value="07">07</option>
+                    <option value="08">08</option>
+                    <option value="09">09</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                    <option value="21">21</option>
+                    <option value="22">22</option>
+                    <option value="23">23</option>
+                    <option value="24">24</option>
+                  </Form.Control>
+                  <Form.Control
+                    as="select"
+                    name="min"
+                    onChange={this.handleEditEvent}
+                  >
+                    <option>m</option>
+                    <option value="00">00</option>
+                    <option value="30">30</option>
+                  </Form.Control>
+                </Form.Group>
                 <input
                   name="newEvent"
                   defaultValue={
@@ -359,7 +367,6 @@ export default class Day extends Component {
             )}
             <br />
             <div className="eventMadeBy">
-              {console.log(this.props.events[this.state.eventIndex])}
               Event made:{""}
               {this.props.events[this.state.eventIndex].dateCreated.slice(
                 0,
@@ -376,13 +383,12 @@ export default class Day extends Component {
   }
 }
 
-
 Day.propTypes = {
-    day: PropTypes.arrayOf(
-        PropTypes.shape({
-            popupToggle: PropTypes.bool,
-            eventToggle: PropTypes.bool,
-            editToggle: PropTypes.bool,
-        })
-    )
-}
+  Day: PropTypes.arrayOf(
+    PropTypes.shape({
+      popupToggle: PropTypes.bool,
+      eventToggle: PropTypes.bool,
+      editToggle: PropTypes.bool
+    })
+  )
+};

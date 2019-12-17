@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "../style/nav.css";
 import { apiAuth, apiRegister, apiLogin, apiLogout } from "../api/api";
 import User from "./User";
+import Title from "./Title";
 import setAuthJWT from "../api/setAuthJWT";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Tabs } from "react-bootstrap";
@@ -138,11 +139,11 @@ class Nav extends Component {
     return (
       <>
         <nav id="navigation" className="navbar">
-          <h1 className="title">Venue Booking</h1>
+          <Title />
           {this.state.isAuth ? (
             <form className="navbar-brand">
               <p>Logged in as</p>
-              <User loggedInUser={this.loggedInUser} />
+              <User loggedInUser={this.state.loggedinas} />
               <button
                 className="logout-btn"
                 onClick={e => {

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Form } from "react-bootstrap";
+import PropTypes from "prop-types";
 
 // import { CSSTransitionGroup } from "react-transition-group";
 
@@ -373,4 +374,15 @@ export default class Day extends Component {
       </div>
     );
   }
+}
+
+
+Day.propTypes = {
+    day: PropTypes.arrayOf(
+        PropTypes.shape({
+            popupToggle: PropTypes.bool,
+            eventToggle: PropTypes.bool,
+            editToggle: PropTypes.bool,
+        })
+    )
 }

@@ -113,7 +113,6 @@ export default class Day extends Component {
   };
 
   render() {
-    //   { console.log(`curuser`, this.props.currentUser)}
     const { editEvent, deleteEvent } = this.props;
     return (
       <div className="day">
@@ -222,62 +221,83 @@ export default class Day extends Component {
                   }
                 }}
               />
-              {this.state.editToggle ? (
-                <img
-                  className="icon"
-                  src="/back.png"
-                  alt="back icon"
-                  onClick={this.handleEditToggle}
-                />
-              ) : (
-                <>
+              {console.log(`cur`, this.props.currentUser)}
+                        {this.props.currentUser === this.props.events[this.state.eventIndex].createdByUser ? (
+                this.state.editToggle ? (
                   <img
                     className="icon"
-                    src="/delete.png"
-                    alt="delete icon"
-                    onClick={() => {
-                      deleteEvent(this.props.events[this.state.eventIndex]._id);
-                      this.handleEventToggle();
-                    }}
-                  />
-                  <img
-                    className="icon"
-                    src="/edit.png"
-                    alt="edit icon"
+                    src="/back.png"
+                    alt="back icon"
                     onClick={this.handleEditToggle}
                   />
-                </>
+                ) : (
+                  <>
+                    <img
+                      className="icon"
+                      src="/delete.png"
+                      alt="delete icon"
+                      onClick={() => {
+                        deleteEvent(
+                          this.props.events[this.state.eventIndex]._id
+                        );
+                        this.handleEventToggle();
+                      }}
+                    />
+                    <img
+                      className="icon"
+                      src="/edit.png"
+                      alt="edit icon"
+                      onClick={this.handleEditToggle}
+                    />
+                  </>
+                )
+              ) : (
+                ""
               )}
             </div>
-            {/* //TODO: && user */}
             {this.state.editToggle ? (
               <form action="" className="editform">
-                <Form.Group controlId="exampleForm.ControlSelect1 selecttime">
-                  <Form.Label>Time: </Form.Label>
-                  <Form.Control as="select" className="select">
-                    <option value="00">00</option>
-                    <option value="01">01</option>
-                    <option value="02">02</option>
-                    <option value="03">03</option>
-                    <option value="04">04</option>
-                    <option value="05">05</option>
-                    <option value="06">06</option>
-                    <option value="07">07</option>
-                    <option value="08">08</option>
-                    <option value="09">09</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
-                  </Form.Control>
-                  <Form.Control as="select">
-                    <option value="00">00</option>
-                    <option value="30">30</option>
-                  </Form.Control>
-                  <Form.Control as="select">
-                    <option value="pm">AM</option>
-                    <option value="am">PM</option>
-                  </Form.Control>
-                </Form.Group>
+                            <Form.Group controlId="exampleForm.ControlSelect1 selecttime">
+                                <Form.Label>Time: </Form.Label>
+                                <Form.Control
+                                    name="hour"
+                                    as="select"
+                                    className="select"
+                                    onChange={this.handleChange}
+                                >
+                                    <option>h</option>
+                                    <option value="00">00</option>
+                                    <option value="01">01</option>
+                                    <option value="02">02</option>
+                                    <option value="03">03</option>
+                                    <option value="04">04</option>
+                                    <option value="05">05</option>
+                                    <option value="06">06</option>
+                                    <option value="07">07</option>
+                                    <option value="08">08</option>
+                                    <option value="09">09</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                    <option value="13">13</option>
+                                    <option value="14">14</option>
+                                    <option value="15">15</option>
+                                    <option value="16">16</option>
+                                    <option value="17">17</option>
+                                    <option value="18">18</option>
+                                    <option value="19">19</option>
+                                    <option value="20">20</option>
+                                    <option value="21">21</option>
+                                    <option value="22">22</option>
+                                    <option value="23">23</option>
+                                    <option value="24">24</option>
+                                </Form.Control>
+                                <Form.Control as="select" name="min" onChange={this.handleEditEvent}>
+                                    <option>m</option>
+                                    <option value="00">00</option>
+                                    <option value="30">30</option>
+                                </Form.Control>
+                            </Form.Group>
                 <input
                   name="newEvent"
                   defaultValue={
@@ -338,11 +358,13 @@ export default class Day extends Component {
             )}
             <br />
             <div className="eventMadeBy">
-                        {console.log(this.props.events[this.state.eventIndex])}
+              {console.log(this.props.events[this.state.eventIndex])}
               Event made:{""}
-                {this.props.events[this.state.eventIndex].dateCreated.slice(0, 10)}{" "}
-                     <br/>   By  {" "}
-                {this.props.events[this.state.eventIndex].createdByUser}
+              {this.props.events[this.state.eventIndex].dateCreated.slice(
+                0,
+                10
+              )}{" "}
+              <br /> By {this.props.events[this.state.eventIndex].createdByUser}
             </div>
           </form>
         ) : (

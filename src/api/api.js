@@ -11,7 +11,6 @@ export const apiAuth = () => {
           resolve(token)
       }
     const decoded = jwt_decode(token);
-      console.log(`poop2`);
     
     const currentTime = Date.now() / 1000;
     if (decoded.exp < currentTime) {

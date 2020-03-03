@@ -1,23 +1,23 @@
-import React, { Component } from "react";
-import "../style/nav.css";
-import { apiAuth, apiRegister, apiLogin, apiLogout } from "../api/api";
-import User from "./User";
-import Title from "./Title";
-import setAuthJWT from "../api/setAuthJWT";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { Tabs } from "react-bootstrap";
-import { Tab } from "react-bootstrap";
+import React, { Component } from 'react'
+import '../style/nav.css'
+import { apiAuth, apiRegister, apiLogin, apiLogout } from '../api/api'
+import User from './User'
+import Title from './Title'
+import setAuthJWT from '../api/setAuthJWT'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import { Tabs } from 'react-bootstrap'
+import { Tab } from 'react-bootstrap'
 
 class Nav extends Component {
   state = {
-    name: "",
-    email: "",
-    password: "",
+    name: '',
+    email: '',
+    password: '',
     isAuth: false,
-    loggedinas: "",
+    loggedinas: '',
     errorMsg: false,
-    errorToggle: false,
-  };
+    errorToggle: false
+  }
 
   componentDidMount = () => {
     apiAuth()
@@ -25,35 +25,35 @@ class Nav extends Component {
         if (decoded === null) {
           this.setState({
             isAuth: false,
-              email: '',
-              name: '',
-              loggedinas: ''
-          });
+            email: '',
+            name: '',
+            loggedinas: ''
+          })
         } else {
           this.setState({
             isAuth: true,
             email: decoded.email,
             name: decoded.name,
             loggedinas: decoded.name
-          });
+          })
         }
       })
-      .catch(error => console.log(error));
-  };
+      .catch(error => console.log(error))
+  }
 
   handleOnCHange = event => {
-    this.setState({ [event.target.name]: event.target.value });
-  };
+    this.setState({ [event.target.name]: event.target.value })
+  }
 
   handleSubmitRegister = event => {
-    event.preventDefault();
+    event.preventDefault()
 
     if (
-      this.state.email === "" ||
-      this.state.password === "" ||
-      this.state.email === ""
+      this.state.email === '' ||
+      this.state.password === '' ||
+      this.state.email === ''
     ) {
-      console.log("error");
+      console.log('error')
     } else {
       apiRegister({
         name: this.state.name,
@@ -63,29 +63,29 @@ class Nav extends Component {
         .then(decoded => {
           this.setState({
             email: decoded.email,
-            password: "",
+            password: '',
             isAuth: true,
             loggedinas: decoded.name,
             errorToggle: false,
-            errorMsg: ""
-          });
+            errorMsg: ''
+          })
         })
         .catch(errormsg => {
-          console.log(errormsg);
+          console.log(errormsg)
 
           this.setState({
             errorMsg: errormsg,
             errorToggle: true
-          });
-        });
+          })
+        })
     }
-  };
+  }
 
   handleSubmitLogin = event => {
-    event.preventDefault();
+    event.preventDefault()
 
-    if (this.state.email === "" || this.state.password === "") {
-      console.log("error");
+    if (this.state.email === '' || this.state.password === '') {
+      console.log('error')
     } else {
       apiLogin({
         name: this.state.name,
@@ -95,116 +95,116 @@ class Nav extends Component {
         .then(result => {
           this.setState({
             email: result.email,
-            password: "",
+            password: '',
             isAuth: true,
             loggedinas: result.name,
             errorToggle: false,
-            errorMsg: ""
-          });
+            errorMsg: ''
+          })
         })
         .catch(errormsg => {
-          console.log(errormsg);
+          console.log(errormsg)
 
           this.setState({
             errorMsg: errormsg,
             errorToggle: true
-          });
-        });
+          })
+        })
     }
-  };
+  }
 
   handleLogout = user => {
     apiLogout(user)
       .then(result => {
-        localStorage.removeItem("jwtToken");
-        setAuthJWT(null);
+        localStorage.removeItem('jwtToken')
+        setAuthJWT(null)
         this.setState({
           isAuth: false,
-          loggedinas: ""
-        });
+          loggedinas: ''
+        })
       })
-      .catch();
-  };
+      .catch()
+  }
 
   loggedInUser = () => {
     if (this.state.isAuth) {
-      return this.state.loggedinas;
+      return this.state.loggedinas
     }
-  };
+  }
 
   render() {
     return (
       <>
-        <nav id="navigation" className="navbar">
+        <nav id='navigation' className='navbar'>
           <Title />
           {this.state.isAuth ? (
-            <form className="navbar-brand">
+            <form className='navbar-brand'>
               <p>Logged in as</p>
               <User loggedInUser={this.state.loggedinas} />
               <button
-                className="logout-btn"
+                className='logout-btn'
                 onClick={e => {
-                  e.preventDefault();
-                  this.handleLogout(this.state.email);
+                  e.preventDefault()
+                  this.handleLogout(this.state.email)
                 }}
               >
                 Log Out
               </button>
             </form>
           ) : (
-            <div className="login-register">
-              <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
-                <Tab eventKey="profile" title="Login">
-                  {" "}
+            <div className='login-register'>
+              <Tabs defaultActiveKey='profile' id='uncontrolled-tab-example'>
+                <Tab eventKey='profile' title='Login'>
+                  {' '}
                   <form
-                    className="navbar-brand"
+                    className='navbar-brand'
                     onSubmit={this.handleSubmitLogin}
                   >
                     <input
-                      type="email"
-                      placeholder="Email"
-                      name="email"
-                      className="form-control"
+                      type='email'
+                      placeholder='Email'
+                      name='email'
+                      className='form-control'
                       onChange={this.handleOnCHange}
                     ></input>
                     <input
-                      type="text"
-                      placeholder="Password"
-                      name="password"
-                      className="form-control"
+                      type='text'
+                      placeholder='Password'
+                      name='password'
+                      className='form-control'
                       onChange={this.handleOnCHange}
                     ></input>
-                    <button className="btn">Login</button>
+                    <button className='btn'>Login</button>
                   </form>
                 </Tab>
 
-                <Tab eventKey="register" title="Register">
+                <Tab eventKey='register' title='Register'>
                   <form
-                    className="navbar-brand"
+                    className='navbar-brand'
                     onSubmit={this.handleSubmitRegister}
                   >
                     <input
-                      type="text"
-                      placeholder="Full Name"
-                      name="name"
-                      className="form-control"
+                      type='text'
+                      placeholder='Full Name'
+                      name='name'
+                      className='form-control'
                       onChange={this.handleOnCHange}
                     ></input>
                     <input
-                      type="email"
-                      placeholder="Email"
-                      name="email"
-                      className="form-control"
+                      type='email'
+                      placeholder='Email'
+                      name='email'
+                      className='form-control'
                       onChange={this.handleOnCHange}
                     ></input>
                     <input
-                      type="text"
-                      placeholder="Password"
-                      name="password"
-                      className="form-control"
+                      type='text'
+                      placeholder='Password'
+                      name='password'
+                      className='form-control'
                       onChange={this.handleOnCHange}
                     ></input>
-                    <button className="btn">Register</button>
+                    <button className='btn'>Register</button>
                   </form>
                 </Tab>
               </Tabs>
@@ -212,8 +212,8 @@ class Nav extends Component {
           )}
         </nav>
       </>
-    );
+    )
   }
 }
 
-export default Nav;
+export default Nav

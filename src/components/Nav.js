@@ -37,15 +37,12 @@ class Nav extends Component {
             loggedinas: decoded.name
           });
         }
-        console.log(`decoded`, decoded);
       })
       .catch(error => console.log(error));
   };
 
   handleOnCHange = event => {
     this.setState({ [event.target.name]: event.target.value });
-    //! log to see letter by letter
-    //   console.log(this.state);
   };
 
   handleSubmitRegister = event => {

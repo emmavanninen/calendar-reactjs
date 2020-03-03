@@ -1,17 +1,9 @@
 :root {
   background-color: black;
 }
-/* #root {
-  height: 100vh;
-  background-color: rgb(71, 71, 71);
+
+.themonth {
   display: flex;
-  justify-content: center;
-  align-items: center;
-} */
-
-
-.themonth{
-display: flex;
 }
 
 .month-title {

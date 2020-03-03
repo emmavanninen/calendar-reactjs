@@ -4,10 +4,6 @@ import Calendar from "./components/Calendar";
 import Nav from "./components/Nav";
 
 class App extends Component {
-  state = {
-    isAuth: false,
-    loggedinas: ""
-  };
 
   render() {
     return (

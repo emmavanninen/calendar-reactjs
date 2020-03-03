@@ -40,6 +40,7 @@ class Calendar extends Component {
   deleteEvent = id => {
     apiDeleteEvent(id)
       .then(() => {
+          
         this.createCurrentMonth(this.daysInCurrentMonth());
       })
       .catch(error => console.log("error: ", error));
